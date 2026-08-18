@@ -1,12 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import { CivicIssue, Department, IssueCategory, NotificationItem, User } from '../../src/types/index.js';
 import { INITIAL_USERS, INITIAL_DEPARTMENTS, INITIAL_CATEGORIES, INITIAL_ISSUES, INITIAL_NOTIFICATIONS } from '../seedData.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, '../../data');
+
+// In Vercel or serverless, use os.tmpdir() to write temporary runtime state safely
+const isVercel = Boolean(process.env.VERCEL);
+const DATA_DIR = isVercel ? path.join(os.tmpdir(), 'e-civic-data') : path.join(__dirname, '../../data');
 const DB_FILE = path.join(DATA_DIR, 'database.json');
 
 interface Schema {
@@ -26,8 +30,12 @@ class Database {
   }
 
   private ensureDataDir() {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+    } catch (e) {
+      // Graceful fallback for serverless read-only root
     }
   }
 
@@ -38,7 +46,7 @@ class Database {
         return JSON.parse(raw);
       }
     } catch (e) {
-      console.warn('Could not read existing database.json, initializing default seed data.');
+      // Fallback to fresh seed data
     }
 
     const defaultData: Schema = {
@@ -58,7 +66,7 @@ class Database {
       this.ensureDataDir();
       fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Failed to write database file:', err);
+      // In-memory data is still retained in runtime memory
     }
   }
 

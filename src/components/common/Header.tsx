@@ -31,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleNotifications
 }) => {
   const { currentRole, currentUser, switchUser, switchRole } = useAuth();
-  const { notifications, markAllNotificationsAsRead, setSelectedIssue, issues } = useIssues();
+  const { notifications, markAllNotificationsRead, setSelectedIssue, issues } = useIssues();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -179,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({
                       System Notifications
                     </span>
                     <button
-                      onClick={() => markAllNotificationsAsRead()}
+                      onClick={() => markAllNotificationsRead()}
                       className="text-[11px] text-teal-700 hover:underline font-medium"
                     >
                       Mark all as read

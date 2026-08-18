@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 interface CivicMapProps {
   issues: CivicIssue[];
   onSelectIssue?: (issue: CivicIssue) => void;
+  onSelectSector?: (sectorName: string) => void;
   height?: string;
   selectedCategory?: string;
   selectedStatus?: string;
@@ -15,6 +16,7 @@ interface CivicMapProps {
 export const CivicMap: React.FC<CivicMapProps> = ({
   issues,
   onSelectIssue,
+  onSelectSector,
   height = '460px',
   selectedCategory: initialCategory = 'all',
   selectedStatus: initialStatus = 'all'
