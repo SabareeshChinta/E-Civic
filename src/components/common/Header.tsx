@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   Clock,
   ArrowRight,
+  ArrowLeft,
   Menu,
   X,
   Home
@@ -18,10 +19,17 @@ import {
 
 interface HeaderProps {
   onNavigateHome?: () => void;
+  onNavigateBack?: () => void;
+  canGoBack?: boolean;
   onToggleNotifications?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNavigateHome, onToggleNotifications }) => {
+export const Header: React.FC<HeaderProps> = ({
+  onNavigateHome,
+  onNavigateBack,
+  canGoBack = false,
+  onToggleNotifications
+}) => {
   const { currentRole, currentUser, switchUser, switchRole } = useAuth();
   const { notifications, markAllNotificationsAsRead, setSelectedIssue, issues } = useIssues();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -44,6 +52,14 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateHome, onToggleNotifica
     } else {
       switchRole('citizen');
       setSelectedIssue(null);
+    }
+  };
+
+  const handleBackClick = () => {
+    if (onNavigateBack) {
+      onNavigateBack();
+    } else {
+      handleLogoOrHomeClick();
     }
   };
 
@@ -75,8 +91,19 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateHome, onToggleNotifica
             </div>
           </div>
 
-          {/* Center: Home Button & Quick Experience Switcher */}
+          {/* Center: Back Button, Home Button & Quick Experience Switcher */}
           <div className="flex items-center space-x-2">
+            {/* Back Button */}
+            <button
+              id="header-back-btn"
+              onClick={handleBackClick}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-semibold text-slate-700 hover:text-teal-800 hover:bg-slate-100 transition border border-slate-200"
+              title="Go Back to Previous Screen"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-teal-700" />
+              <span>Back</span>
+            </button>
+
             {/* Direct Home Button */}
             <button
               id="header-home-btn"

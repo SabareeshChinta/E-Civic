@@ -19,7 +19,8 @@ import {
   CheckCircle2,
   AlertTriangle,
   Info,
-  X
+  X,
+  ArrowLeft
 } from 'lucide-react';
 import { CivicIssue } from './types/index.js';
 
@@ -35,34 +36,62 @@ export const App: React.FC = () => {
   } = useIssues();
 
   const [citizenTab, setCitizenTab] = useState<CitizenNavTab>('home');
+  const [tabHistory, setTabHistory] = useState<CitizenNavTab[]>([]);
   const [trackedIssueId, setTrackedIssueId] = useState<string>('CIV-2842');
+
+  const navigateToTab = (newTab: CitizenNavTab) => {
+    if (citizenTab !== newTab) {
+      setTabHistory(prev => [...prev, citizenTab]);
+      setCitizenTab(newTab);
+    }
+  };
 
   const handleNavigateHome = () => {
     switchRole('citizen');
     setSelectedIssue(null);
+    setTabHistory([]);
     setCitizenTab('home');
   };
 
+  const handleNavigateBack = () => {
+    if (selectedIssue) {
+      setSelectedIssue(null);
+      return;
+    }
+
+    if (tabHistory.length > 0) {
+      const prev = tabHistory[tabHistory.length - 1];
+      setTabHistory(tabHistory.slice(0, -1));
+      setCitizenTab(prev);
+    } else {
+      setCitizenTab('home');
+    }
+  };
+
   const handleOpenReport = () => {
-    setCitizenTab('report');
+    navigateToTab('report');
   };
 
   const handleOpenTrack = (issueId?: string) => {
     if (issueId) {
       setTrackedIssueId(issueId);
     }
-    setCitizenTab('track');
+    navigateToTab('track');
   };
 
   const handleReportSubmitted = (newIssueId: string) => {
     setTrackedIssueId(newIssueId);
-    setCitizenTab('track');
+    navigateToTab('track');
   };
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans">
-      {/* 1. TOP HEADER (Unified Navigation, Home Button & Profile Switcher) */}
-      <Header onNavigateHome={handleNavigateHome} />
+      {/* 1. TOP HEADER (Unified Navigation, Back Button, Home Button & Profile Switcher) */}
+      <Header
+        onNavigateHome={handleNavigateHome}
+        onNavigateBack={handleNavigateBack}
+        canGoBack={citizenTab !== 'home' || selectedIssue !== null || tabHistory.length > 0}
+      />
 
       {/* 2. CITIZEN SUB-NAVIGATION BAR (Citizen Experience Navigation Specs) */}
       {currentRole === 'citizen' && (
@@ -71,7 +100,7 @@ export const App: React.FC = () => {
             <nav className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto text-xs">
               <button
                 id="nav-citizen-home"
-                onClick={() => setCitizenTab('home')}
+                onClick={() => navigateToTab('home')}
                 className={`px-3 py-1.5 rounded font-medium flex items-center gap-1.5 transition shrink-0 ${
                   citizenTab === 'home'
                     ? 'bg-slate-900 text-white font-semibold'
@@ -84,7 +113,7 @@ export const App: React.FC = () => {
 
               <button
                 id="nav-citizen-report"
-                onClick={() => setCitizenTab('report')}
+                onClick={() => navigateToTab('report')}
                 className={`px-3 py-1.5 rounded font-medium flex items-center gap-1.5 transition shrink-0 ${
                   citizenTab === 'report'
                     ? 'bg-teal-800 text-white font-semibold'
@@ -97,7 +126,7 @@ export const App: React.FC = () => {
 
               <button
                 id="nav-citizen-myreports"
-                onClick={() => setCitizenTab('my_reports')}
+                onClick={() => navigateToTab('my_reports')}
                 className={`px-3 py-1.5 rounded font-medium flex items-center gap-1.5 transition shrink-0 ${
                   citizenTab === 'my_reports'
                     ? 'bg-slate-900 text-white font-semibold'
@@ -110,7 +139,7 @@ export const App: React.FC = () => {
 
               <button
                 id="nav-citizen-nearby"
-                onClick={() => setCitizenTab('nearby')}
+                onClick={() => navigateToTab('nearby')}
                 className={`px-3 py-1.5 rounded font-medium flex items-center gap-1.5 transition shrink-0 ${
                   citizenTab === 'nearby'
                     ? 'bg-slate-900 text-white font-semibold'
@@ -123,7 +152,7 @@ export const App: React.FC = () => {
 
               <button
                 id="nav-citizen-track"
-                onClick={() => setCitizenTab('track')}
+                onClick={() => navigateToTab('track')}
                 className={`px-3 py-1.5 rounded font-medium flex items-center gap-1.5 transition shrink-0 ${
                   citizenTab === 'track'
                     ? 'bg-slate-900 text-white font-semibold'
@@ -154,7 +183,7 @@ export const App: React.FC = () => {
 
             {citizenTab === 'report' && (
               <ReportIssueFlow
-                onCancel={() => setCitizenTab('home')}
+                onCancel={handleNavigateBack}
                 onSuccess={handleReportSubmitted}
               />
             )}
@@ -169,13 +198,21 @@ export const App: React.FC = () => {
 
             {citizenTab === 'nearby' && (
               <div className="max-w-5xl mx-auto px-4 py-8 space-y-4">
-                <div className="border-b border-slate-200 pb-3">
-                  <h1 className="text-xl font-bold text-slate-900 tracking-tight">
-                    Nearby Civic Issues Map
-                  </h1>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Filter by status and category across your municipal ward
-                  </p>
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                  <div>
+                    <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+                      Nearby Civic Issues Map
+                    </h1>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Filter by status and category across your municipal ward
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleNavigateBack}
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 px-2.5 py-1 rounded bg-white border border-slate-200 hover:bg-slate-50"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" /> Back
+                  </button>
                 </div>
                 <CivicMap
                   issues={issues}
@@ -189,6 +226,7 @@ export const App: React.FC = () => {
               <TrackComplaintPage
                 initialIssueId={trackedIssueId}
                 onSelectIssue={issue => setTrackedIssueId(issue.id)}
+                onBack={handleNavigateBack}
               />
             )}
           </>

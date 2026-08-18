@@ -21,9 +21,10 @@ import {
 interface TrackComplaintPageProps {
   initialIssueId?: string;
   onSelectIssue?: (issue: CivicIssue) => void;
+  onBack?: () => void;
 }
 
-export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialIssueId }) => {
+export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialIssueId, onBack }) => {
   const { issues, verifyResolution } = useIssues();
   const [searchId, setSearchId] = useState<string>(initialIssueId || 'CIV-2842');
   const [selectedIssue, setSelectedIssue] = useState<CivicIssue | null>(null);
@@ -55,13 +56,23 @@ export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialI
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-          Track a Complaint
-        </h1>
-        <p className="text-xs text-slate-500 mt-1">
-          Search with your unique complaint reference number to view the live operational resolution lifecycle.
-        </p>
+      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+            Track a Complaint
+          </h1>
+          <p className="text-xs text-slate-500 mt-1">
+            Search with your unique complaint reference number to view the live operational resolution lifecycle.
+          </p>
+        </div>
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-slate-200 hover:bg-slate-50 shrink-0"
+          >
+            ← Back
+          </button>
+        )}
       </div>
 
       {/* Search Bar */}
