@@ -96,8 +96,8 @@ export const App: React.FC = () => {
       {/* 2. CITIZEN SUB-NAVIGATION BAR (Citizen Experience Navigation Specs) */}
       {currentRole === 'citizen' && (
         <div className="bg-white border-b border-slate-200">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <nav className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto text-xs">
+          <div className="max-w-5xl mx-auto px-3 sm:px-6">
+            <nav className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar text-xs">
               <button
                 id="nav-citizen-home"
                 onClick={() => navigateToTab('home')}

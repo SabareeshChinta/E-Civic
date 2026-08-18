@@ -1,0 +1,1082 @@
+{
+  "users": [
+    {
+      "id": "user_citizen_aarav",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@citizen.gov.in",
+      "role": "citizen",
+      "ward": "Ward 14",
+      "area": "Sector 14, Main Market",
+      "phone": "+91 98765 43210",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+      "reliabilityScore": 98,
+      "reportsCount": 4,
+      "confirmationsCount": 28,
+      "resolutionsVerified": 12
+    },
+    {
+      "id": "user_officer_priya",
+      "name": "Priya Mehta",
+      "email": "priya.mehta@pwd.gov.in",
+      "role": "officer",
+      "departmentId": "dept_public_works",
+      "departmentName": "Public Works",
+      "ward": "Ward 14",
+      "phone": "+91 98111 22334",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+      "reliabilityScore": 100,
+      "reportsCount": 0,
+      "confirmationsCount": 0,
+      "resolutionsVerified": 89
+    },
+    {
+      "id": "user_admin_rajesh",
+      "name": "Municipal Admin",
+      "email": "admin@municipality.gov.in",
+      "role": "admin",
+      "ward": "City Operations HQ",
+      "phone": "+91 98000 11223",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+      "reliabilityScore": 100,
+      "reportsCount": 0,
+      "confirmationsCount": 0,
+      "resolutionsVerified": 150
+    }
+  ],
+  "departments": [
+    {
+      "id": "dept_public_works",
+      "name": "Public Works",
+      "code": "PWD",
+      "icon": "Hammer",
+      "headOfficer": "Priya Mehta",
+      "activeOfficersCount": 18,
+      "slaHoursDefault": 24,
+      "color": "#0f766e",
+      "stats": {
+        "total": 123,
+        "pending": 42,
+        "inProgress": 18,
+        "resolved": 81,
+        "resolutionRate": 82,
+        "avgResolutionDays": 2.4
+      }
+    },
+    {
+      "id": "dept_sanitation",
+      "name": "Sanitation",
+      "code": "SWM",
+      "icon": "Trash2",
+      "headOfficer": "Vikram Singh",
+      "activeOfficersCount": 24,
+      "slaHoursDefault": 12,
+      "color": "#059669",
+      "stats": {
+        "total": 105,
+        "pending": 31,
+        "inProgress": 12,
+        "resolved": 74,
+        "resolutionRate": 71,
+        "avgResolutionDays": 1.2
+      }
+    },
+    {
+      "id": "dept_water_drainage",
+      "name": "Water & Drainage",
+      "code": "WDD",
+      "icon": "Droplets",
+      "headOfficer": "Sunita Rao",
+      "activeOfficersCount": 15,
+      "slaHoursDefault": 12,
+      "color": "#0284c7",
+      "stats": {
+        "total": 70,
+        "pending": 18,
+        "inProgress": 8,
+        "resolved": 52,
+        "resolutionRate": 89,
+        "avgResolutionDays": 1.1
+      }
+    },
+    {
+      "id": "dept_electrical",
+      "name": "Electrical",
+      "code": "ELEC",
+      "icon": "Zap",
+      "headOfficer": "Karan Joshi",
+      "activeOfficersCount": 12,
+      "slaHoursDefault": 24,
+      "color": "#d97706",
+      "stats": {
+        "total": 59,
+        "pending": 12,
+        "inProgress": 5,
+        "resolved": 47,
+        "resolutionRate": 94,
+        "avgResolutionDays": 1.8
+      }
+    },
+    {
+      "id": "dept_traffic",
+      "name": "Traffic & Signage",
+      "code": "TRF",
+      "icon": "AlertTriangle",
+      "headOfficer": "Sanjay Kapoor",
+      "activeOfficersCount": 9,
+      "slaHoursDefault": 36,
+      "color": "#ea580c",
+      "stats": {
+        "total": 44,
+        "pending": 14,
+        "inProgress": 6,
+        "resolved": 30,
+        "resolutionRate": 76,
+        "avgResolutionDays": 2.9
+      }
+    },
+    {
+      "id": "dept_parks",
+      "name": "Parks & Public Spaces",
+      "code": "PPS",
+      "icon": "Building2",
+      "headOfficer": "Meera Deshmukh",
+      "activeOfficersCount": 8,
+      "slaHoursDefault": 48,
+      "color": "#475569",
+      "stats": {
+        "total": 36,
+        "pending": 11,
+        "inProgress": 4,
+        "resolved": 25,
+        "resolutionRate": 78,
+        "avgResolutionDays": 3.5
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_road",
+      "name": "Road & Potholes",
+      "code": "ROAD",
+      "defaultDepartmentId": "dept_public_works",
+      "defaultDepartmentName": "Public Works",
+      "icon": "CarFront",
+      "baseSeverity": "high",
+      "description": "Potholes, broken road surface, open utility trench, pavement damage."
+    },
+    {
+      "id": "cat_waste",
+      "name": "Garbage & Waste",
+      "code": "WASTE",
+      "defaultDepartmentId": "dept_sanitation",
+      "defaultDepartmentName": "Sanitation",
+      "icon": "Trash2",
+      "baseSeverity": "medium",
+      "description": "Uncollected garbage, overflowing bin, open dumping, street litter."
+    },
+    {
+      "id": "cat_streetlights",
+      "name": "Streetlights",
+      "code": "LIGHT",
+      "defaultDepartmentId": "dept_electrical",
+      "defaultDepartmentName": "Electrical",
+      "icon": "Lightbulb",
+      "baseSeverity": "medium",
+      "description": "Non-functioning streetlight pole, dark stretch, faulty timer, hanging wire."
+    },
+    {
+      "id": "cat_water",
+      "name": "Water & Drainage",
+      "code": "WATER",
+      "defaultDepartmentId": "dept_water_drainage",
+      "defaultDepartmentName": "Water & Drainage",
+      "icon": "Droplet",
+      "baseSeverity": "high",
+      "description": "Pipeline leakage, waterlogging, blocked storm drain, overflowing sewage manhole."
+    },
+    {
+      "id": "cat_public_spaces",
+      "name": "Public Spaces",
+      "code": "PARKS",
+      "defaultDepartmentId": "dept_parks",
+      "defaultDepartmentName": "Parks & Public Spaces",
+      "icon": "Building2",
+      "baseSeverity": "medium",
+      "description": "Damaged park bench, broken walkway slab, public garden upkeep, playground hazard."
+    },
+    {
+      "id": "cat_traffic",
+      "name": "Traffic & Signage",
+      "code": "TRAFFIC",
+      "defaultDepartmentId": "dept_traffic",
+      "defaultDepartmentName": "Traffic & Signage",
+      "icon": "Signpost",
+      "baseSeverity": "medium",
+      "description": "Damaged traffic signal, missing road sign, broken divider, bent crash barrier."
+    },
+    {
+      "id": "cat_other",
+      "name": "Other Civic Issue",
+      "code": "OTHER",
+      "defaultDepartmentId": "dept_public_works",
+      "defaultDepartmentName": "Public Works",
+      "icon": "AlertCircle",
+      "baseSeverity": "medium",
+      "description": "General public infrastructure issues requiring municipal attention."
+    }
+  ],
+  "issues": [
+    {
+      "id": "CIV-2842",
+      "title": "Large pothole near Sector 14 market corner",
+      "description": "Deep road crater approximately 1.2m across outside Gate 2 of Sector 14 market. High risk of two-wheeler skids and traffic slowdown during peak rush hours.",
+      "categoryId": "cat_road",
+      "categoryName": "Road & Potholes",
+      "departmentId": "dept_public_works",
+      "departmentName": "Public Works",
+      "status": "in_progress",
+      "severity": "high",
+      "priorityScore": 88,
+      "priorityLevel": "HIGH",
+      "priorityBreakdown": {
+        "score": 88,
+        "level": "HIGH",
+        "factors": {
+          "confirmationsImpact": 18,
+          "safetyRiskImpact": 15,
+          "trafficImpact": 12,
+          "recurrenceImpact": 10,
+          "timeUnresolvedImpact": 8,
+          "affectedPopulationEstimate": 140
+        },
+        "explanations": [
+          "High vehicular density transit route outside Sector 14 market.",
+          "Immediate safety hazard for two-wheelers and night traffic.",
+          "SLA: 2 hours remaining before escalation."
+        ]
+      },
+      "location": {
+        "lat": 28.6145,
+        "lng": 77.2102,
+        "address": "Main Market Road, opposite Gate 2",
+        "sector": "Sector 14",
+        "ward": "Ward 14",
+        "landmark": "Near Central Market Gate 2"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Road & Potholes",
+        "categoryId": "cat_road",
+        "confidence": 96,
+        "severity": "high",
+        "department": "Public Works",
+        "departmentId": "dept_public_works",
+        "priorityScore": 88,
+        "priorityLevel": "HIGH",
+        "safetyHazard": true,
+        "estimatedCostBracket": "₹15,000 - ₹35,000",
+        "suggestedAction": "Deploy asphalt cold-mix repair squad with safety barriers.",
+        "detectedLabels": [
+          "Severe Pothole",
+          "Asphalt Damage",
+          "Traffic Obstruction"
+        ],
+        "alternatives": [
+          {
+            "label": "Road & Potholes",
+            "confidence": 96
+          },
+          {
+            "label": "Traffic & Signage",
+            "confidence": 4
+          }
+        ],
+        "reasoning": [
+          "Classified as high-priority road surface defect on primary commercial corridor."
+        ],
+        "trustScore": 97,
+        "trustFactors": [
+          "Verified GPS metadata within Ward 14 jurisdiction"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_aarav",
+        "name": "Aarav Sharma",
+        "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+        "reliabilityScore": 98
+      },
+      "assignedOfficer": {
+        "id": "user_officer_priya",
+        "name": "Priya Mehta",
+        "department": "Public Works",
+        "assignedAt": "16 Aug · 11:18 AM"
+      },
+      "confirmations": [
+        {
+          "id": "conf_1",
+          "userId": "user_citizen_neha",
+          "userName": "Neha Patel",
+          "comment": "Witnessed scooter skid here this morning. Needs quick fix.",
+          "createdAt": "16 Aug · 11:30 AM"
+        }
+      ],
+      "confirmationsCount": 18,
+      "duplicateCount": 2,
+      "mergedReports": [
+        {
+          "id": "CIV-2840",
+          "reporterName": "Sunil Kumar",
+          "createdAt": "16 Aug · 10:50 AM",
+          "distance": "25m away",
+          "description": "Road damage near SBI ATM"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "tl_1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Citizen Aarav Sharma filed report with photo evidence.",
+          "timestamp": "16 Aug · 10:42 AM",
+          "actorName": "Aarav Sharma",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "tl_2",
+          "stage": "community_verified",
+          "title": "VERIFIED",
+          "description": "Automated triage and community verification completed.",
+          "timestamp": "16 Aug · 11:05 AM",
+          "actorName": "Civic Engine",
+          "actorRole": "System",
+          "isCompleted": true
+        },
+        {
+          "id": "tl_3",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Public Works Department. Officer: Priya Mehta.",
+          "timestamp": "16 Aug · 11:18 AM",
+          "actorName": "Priya Mehta",
+          "actorRole": "Public Works",
+          "isCompleted": true
+        },
+        {
+          "id": "tl_4",
+          "stage": "in_progress",
+          "title": "IN PROGRESS",
+          "description": "Field repair team dispatched with asphalt patch mix.",
+          "timestamp": "16 Aug · 12:30 PM",
+          "actorName": "Public Works Field Squad",
+          "actorRole": "Public Works",
+          "isCompleted": true
+        },
+        {
+          "id": "tl_5",
+          "stage": "resolved",
+          "title": "RESOLVED",
+          "description": "Pending physical completion verification.",
+          "timestamp": "",
+          "actorName": "Public Works",
+          "actorRole": "Authority",
+          "isCompleted": false
+        }
+      ],
+      "sla": {
+        "targetHours": 24,
+        "deadline": "17 Aug · 10:42 AM",
+        "hoursRemaining": 2,
+        "isBreached": false
+      },
+      "createdAt": "2026-08-18T15:05:12.541Z",
+      "updatedAt": "2026-08-18T17:35:12.541Z"
+    },
+    {
+      "id": "CIV-2841",
+      "title": "Pothole reported on Main Market Road",
+      "description": "Road surface cavity near bus shelter causing bicycle and scooter diversions.",
+      "categoryId": "cat_road",
+      "categoryName": "Road & Potholes",
+      "departmentId": "dept_public_works",
+      "departmentName": "Public Works",
+      "status": "in_progress",
+      "severity": "high",
+      "priorityScore": 84,
+      "priorityLevel": "HIGH",
+      "priorityBreakdown": {
+        "score": 84,
+        "level": "HIGH",
+        "factors": {
+          "confirmationsImpact": 14,
+          "safetyRiskImpact": 14,
+          "trafficImpact": 10,
+          "recurrenceImpact": 8,
+          "timeUnresolvedImpact": 6,
+          "affectedPopulationEstimate": 80
+        },
+        "explanations": [
+          "Busy market street with high pedestrian and two-wheeler traffic."
+        ]
+      },
+      "location": {
+        "lat": 28.6155,
+        "lng": 77.2085,
+        "address": "Main Market Road, near Bus Stop",
+        "sector": "Sector 14",
+        "ward": "Ward 14",
+        "landmark": "Near Bus Stop"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Road & Potholes",
+        "categoryId": "cat_road",
+        "confidence": 94,
+        "severity": "high",
+        "department": "Public Works",
+        "departmentId": "dept_public_works",
+        "priorityScore": 84,
+        "priorityLevel": "HIGH",
+        "safetyHazard": true,
+        "estimatedCostBracket": "₹12,000 - ₹25,000",
+        "suggestedAction": "Repair asphalt layer.",
+        "detectedLabels": [
+          "Pothole"
+        ],
+        "alternatives": [
+          {
+            "label": "Road & Potholes",
+            "confidence": 94
+          }
+        ],
+        "reasoning": [
+          "Road surface defect."
+        ],
+        "trustScore": 95,
+        "trustFactors": [
+          "GPS location verified"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_neha",
+        "name": "Neha Patel",
+        "reliabilityScore": 94
+      },
+      "confirmations": [],
+      "confirmationsCount": 12,
+      "duplicateCount": 0,
+      "timeline": [
+        {
+          "id": "t1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Reported by Neha Patel",
+          "timestamp": "16 Aug · 09:15 AM",
+          "actorName": "Neha Patel",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "t2",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Public Works",
+          "timestamp": "16 Aug · 09:45 AM",
+          "actorName": "System",
+          "actorRole": "System",
+          "isCompleted": true
+        },
+        {
+          "id": "t3",
+          "stage": "in_progress",
+          "title": "IN PROGRESS",
+          "description": "Repair crew active",
+          "timestamp": "16 Aug · 10:30 AM",
+          "actorName": "Priya Mehta",
+          "actorRole": "Public Works",
+          "isCompleted": true
+        }
+      ],
+      "sla": {
+        "targetHours": 24,
+        "deadline": "17 Aug · 09:15 AM",
+        "hoursRemaining": 5,
+        "isBreached": false
+      },
+      "createdAt": "2026-08-18T13:05:12.541Z",
+      "updatedAt": "2026-08-18T16:05:12.541Z"
+    },
+    {
+      "id": "CIV-2839",
+      "title": "Streetlight failure along Ward 08 residential avenue",
+      "description": "Series of 3 streetlights completely unlit creating pitch-dark pedestrian stretch.",
+      "categoryId": "cat_streetlights",
+      "categoryName": "Streetlights",
+      "departmentId": "dept_electrical",
+      "departmentName": "Electrical",
+      "status": "assigned",
+      "severity": "medium",
+      "priorityScore": 65,
+      "priorityLevel": "MEDIUM",
+      "priorityBreakdown": {
+        "score": 65,
+        "level": "MEDIUM",
+        "factors": {
+          "confirmationsImpact": 8,
+          "safetyRiskImpact": 10,
+          "trafficImpact": 6,
+          "recurrenceImpact": 0,
+          "timeUnresolvedImpact": 4,
+          "affectedPopulationEstimate": 45
+        },
+        "explanations": [
+          "Residential safety concern during late evening."
+        ]
+      },
+      "location": {
+        "lat": 28.6189,
+        "lng": 77.2045,
+        "address": "Lane 3, Sector 8 Residential",
+        "sector": "Sector 8",
+        "ward": "Ward 08",
+        "landmark": "Near Green Park"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1507034589631-9433cc6bc453?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Streetlights",
+        "categoryId": "cat_streetlights",
+        "confidence": 95,
+        "severity": "medium",
+        "department": "Electrical",
+        "departmentId": "dept_electrical",
+        "priorityScore": 65,
+        "priorityLevel": "MEDIUM",
+        "safetyHazard": false,
+        "estimatedCostBracket": "₹4,000 - ₹8,000",
+        "suggestedAction": "Replace blown LED fixture on pole 14 & 15.",
+        "detectedLabels": [
+          "Broken Streetlight"
+        ],
+        "alternatives": [
+          {
+            "label": "Streetlights",
+            "confidence": 95
+          }
+        ],
+        "reasoning": [
+          "Electrical fixture replacement."
+        ],
+        "trustScore": 92,
+        "trustFactors": [
+          "GPS location verified"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_aarav",
+        "name": "Aarav Sharma",
+        "reliabilityScore": 98
+      },
+      "confirmations": [],
+      "confirmationsCount": 8,
+      "duplicateCount": 0,
+      "timeline": [
+        {
+          "id": "t1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Reported by Aarav Sharma",
+          "timestamp": "16 Aug · 08:30 AM",
+          "actorName": "Aarav Sharma",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "t2",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Electrical Department",
+          "timestamp": "16 Aug · 09:00 AM",
+          "actorName": "System",
+          "actorRole": "System",
+          "isCompleted": true
+        }
+      ],
+      "sla": {
+        "targetHours": 24,
+        "deadline": "17 Aug · 08:30 AM",
+        "hoursRemaining": 6,
+        "isBreached": false
+      },
+      "createdAt": "2026-08-18T12:05:12.541Z",
+      "updatedAt": "2026-08-18T15:05:12.541Z"
+    },
+    {
+      "id": "CIV-2836",
+      "title": "Garbage accumulation near Ward 21 market plaza",
+      "description": "Commercial waste and packaging boxes dumped on public walkway, causing stench.",
+      "categoryId": "cat_waste",
+      "categoryName": "Garbage & Waste",
+      "departmentId": "dept_sanitation",
+      "departmentName": "Sanitation",
+      "status": "resolved",
+      "severity": "medium",
+      "priorityScore": 58,
+      "priorityLevel": "MEDIUM",
+      "priorityBreakdown": {
+        "score": 58,
+        "level": "MEDIUM",
+        "factors": {
+          "confirmationsImpact": 10,
+          "safetyRiskImpact": 6,
+          "trafficImpact": 6,
+          "recurrenceImpact": 0,
+          "timeUnresolvedImpact": 0,
+          "affectedPopulationEstimate": 50
+        },
+        "explanations": [
+          "Cleared by Sanitation compactor squad."
+        ]
+      },
+      "location": {
+        "lat": 28.611,
+        "lng": 77.214,
+        "address": "Market Plaza Lane, Sector 21",
+        "sector": "Sector 21",
+        "ward": "Ward 21",
+        "landmark": "Near Community Hall"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Garbage & Waste",
+        "categoryId": "cat_waste",
+        "confidence": 97,
+        "severity": "medium",
+        "department": "Sanitation",
+        "departmentId": "dept_sanitation",
+        "priorityScore": 58,
+        "priorityLevel": "MEDIUM",
+        "safetyHazard": false,
+        "estimatedCostBracket": "₹5,000",
+        "suggestedAction": "Cleared and sanitized.",
+        "detectedLabels": [
+          "Solid Waste"
+        ],
+        "alternatives": [
+          {
+            "label": "Garbage & Waste",
+            "confidence": 97
+          }
+        ],
+        "reasoning": [
+          "Sanitation cleanup."
+        ],
+        "trustScore": 98,
+        "trustFactors": [
+          "Completed resolution verified"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_aarav",
+        "name": "Aarav Sharma",
+        "reliabilityScore": 98
+      },
+      "assignedOfficer": {
+        "id": "user_officer_vikram",
+        "name": "Vikram Singh",
+        "department": "Sanitation",
+        "assignedAt": "15 Aug · 02:00 PM"
+      },
+      "confirmations": [],
+      "confirmationsCount": 14,
+      "duplicateCount": 1,
+      "timeline": [
+        {
+          "id": "t1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Reported by Aarav Sharma",
+          "timestamp": "15 Aug · 01:15 PM",
+          "actorName": "Aarav Sharma",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "t2",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Sanitation Department",
+          "timestamp": "15 Aug · 02:00 PM",
+          "actorName": "Vikram Singh",
+          "actorRole": "Sanitation",
+          "isCompleted": true
+        },
+        {
+          "id": "t3",
+          "stage": "in_progress",
+          "title": "IN PROGRESS",
+          "description": "Compactor truck deployed",
+          "timestamp": "15 Aug · 03:30 PM",
+          "actorName": "Sanitation Squad",
+          "actorRole": "Sanitation",
+          "isCompleted": true
+        },
+        {
+          "id": "t4",
+          "stage": "resolved",
+          "title": "RESOLVED",
+          "description": "Waste cleared and area sanitized with lime powder.",
+          "timestamp": "15 Aug · 05:00 PM",
+          "actorName": "Vikram Singh",
+          "actorRole": "Sanitation",
+          "isCompleted": true
+        }
+      ],
+      "resolution": {
+        "resolvedAt": "15 Aug · 05:00 PM",
+        "resolvedBy": "Vikram Singh (Sanitation)",
+        "notes": "Dumpster cleared, 1.5 tons of commercial waste removed, sidewalk disinfected.",
+        "beforeImageUrl": "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80",
+        "afterImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80",
+        "verificationStatus": "verified_resolved",
+        "citizenFeedbackCount": {
+          "yes": 8,
+          "no": 0
+        },
+        "citizenVotes": [
+          {
+            "userId": "user_citizen_aarav",
+            "userName": "Aarav Sharma",
+            "vote": "yes",
+            "comment": "Clean sidewalk, verified.",
+            "timestamp": "15 Aug · 05:30 PM"
+          }
+        ]
+      },
+      "sla": {
+        "targetHours": 12,
+        "deadline": "16 Aug · 01:15 AM",
+        "hoursRemaining": 0,
+        "isBreached": false
+      },
+      "createdAt": "2026-08-17T14:05:12.541Z",
+      "updatedAt": "2026-08-17T22:05:12.541Z"
+    },
+    {
+      "id": "CIV-2831",
+      "title": "Water pipeline leakage at Ward 21 junction",
+      "description": "Pressurized underground drinking water supply pipe burst leaking potable water onto road.",
+      "categoryId": "cat_water",
+      "categoryName": "Water & Drainage",
+      "departmentId": "dept_water_drainage",
+      "departmentName": "Water & Drainage",
+      "status": "in_progress",
+      "severity": "critical",
+      "priorityScore": 94,
+      "priorityLevel": "CRITICAL",
+      "priorityBreakdown": {
+        "score": 94,
+        "level": "CRITICAL",
+        "factors": {
+          "confirmationsImpact": 20,
+          "safetyRiskImpact": 16,
+          "trafficImpact": 10,
+          "recurrenceImpact": 6,
+          "timeUnresolvedImpact": 8,
+          "affectedPopulationEstimate": 210
+        },
+        "explanations": [
+          "High water wastage and low residential supply pressure.",
+          "OVER SLA - Immediate valve isolation and weld required."
+        ]
+      },
+      "location": {
+        "lat": 28.612,
+        "lng": 77.215,
+        "address": "Main Supply Road, Ward 21",
+        "sector": "Sector 21",
+        "ward": "Ward 21",
+        "landmark": "Opposite Water Works Booster"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Water & Drainage",
+        "categoryId": "cat_water",
+        "confidence": 98,
+        "severity": "critical",
+        "department": "Water & Drainage",
+        "departmentId": "dept_water_drainage",
+        "priorityScore": 94,
+        "priorityLevel": "CRITICAL",
+        "safetyHazard": true,
+        "estimatedCostBracket": "₹25,000 - ₹50,000",
+        "suggestedAction": "Isolate feeder valve and weld pipe collar.",
+        "detectedLabels": [
+          "Pipeline Leakage",
+          "Water Loss"
+        ],
+        "alternatives": [
+          {
+            "label": "Water & Drainage",
+            "confidence": 98
+          }
+        ],
+        "reasoning": [
+          "Municipal water utility disruption."
+        ],
+        "trustScore": 99,
+        "trustFactors": [
+          "Multiple verified reports"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_neha",
+        "name": "Neha Patel",
+        "reliabilityScore": 94
+      },
+      "assignedOfficer": {
+        "id": "user_officer_sunita",
+        "name": "Sunita Rao",
+        "department": "Water & Drainage",
+        "assignedAt": "16 Aug · 07:00 AM"
+      },
+      "confirmations": [],
+      "confirmationsCount": 22,
+      "duplicateCount": 2,
+      "timeline": [
+        {
+          "id": "t1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Reported by Neha Patel",
+          "timestamp": "16 Aug · 06:30 AM",
+          "actorName": "Neha Patel",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "t2",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Water & Drainage Department",
+          "timestamp": "16 Aug · 07:00 AM",
+          "actorName": "Sunita Rao",
+          "actorRole": "Water & Drainage",
+          "isCompleted": true
+        },
+        {
+          "id": "t3",
+          "stage": "in_progress",
+          "title": "IN PROGRESS",
+          "description": "Excavation and pipe welding in progress",
+          "timestamp": "16 Aug · 08:30 AM",
+          "actorName": "Sunita Rao",
+          "actorRole": "Water & Drainage",
+          "isCompleted": true
+        }
+      ],
+      "sla": {
+        "targetHours": 12,
+        "deadline": "16 Aug · 06:30 PM",
+        "hoursRemaining": -1,
+        "isBreached": true
+      },
+      "createdAt": "2026-08-18T10:05:12.541Z",
+      "updatedAt": "2026-08-18T17:05:12.541Z"
+    },
+    {
+      "id": "CIV-2798",
+      "title": "Broken park railing and concrete bench in Sector 3 Park",
+      "description": "Cracked concrete bench with exposed rebar and broken perimeter railing repaired.",
+      "categoryId": "cat_public_spaces",
+      "categoryName": "Public Spaces",
+      "departmentId": "dept_parks",
+      "departmentName": "Parks & Public Spaces",
+      "status": "resolved",
+      "severity": "medium",
+      "priorityScore": 52,
+      "priorityLevel": "MEDIUM",
+      "priorityBreakdown": {
+        "score": 52,
+        "level": "MEDIUM",
+        "factors": {
+          "confirmationsImpact": 8,
+          "safetyRiskImpact": 8,
+          "trafficImpact": 4,
+          "recurrenceImpact": 0,
+          "timeUnresolvedImpact": 0,
+          "affectedPopulationEstimate": 35
+        },
+        "explanations": [
+          "Repaired by Parks & Public Spaces maintenance crew."
+        ]
+      },
+      "location": {
+        "lat": 28.622,
+        "lng": 77.2085,
+        "address": "Community Park, Sector 3",
+        "sector": "Sector 3",
+        "ward": "Ward 03",
+        "landmark": "Near Sector 3 Park Gate"
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80"
+      ],
+      "aiAnalysis": {
+        "category": "Public Spaces",
+        "categoryId": "cat_public_spaces",
+        "confidence": 93,
+        "severity": "medium",
+        "department": "Parks & Public Spaces",
+        "departmentId": "dept_parks",
+        "priorityScore": 52,
+        "priorityLevel": "MEDIUM",
+        "safetyHazard": false,
+        "estimatedCostBracket": "₹8,000",
+        "suggestedAction": "Bench replacement and railing welding completed.",
+        "detectedLabels": [
+          "Park Maintenance"
+        ],
+        "alternatives": [
+          {
+            "label": "Public Spaces",
+            "confidence": 93
+          }
+        ],
+        "reasoning": [
+          "Public park infrastructure repair."
+        ],
+        "trustScore": 96,
+        "trustFactors": [
+          "Completed resolution verified"
+        ]
+      },
+      "reporter": {
+        "id": "user_citizen_aarav",
+        "name": "Aarav Sharma",
+        "reliabilityScore": 98
+      },
+      "assignedOfficer": {
+        "id": "user_officer_meera",
+        "name": "Meera Deshmukh",
+        "department": "Parks & Public Spaces",
+        "assignedAt": "14 Aug · 10:00 AM"
+      },
+      "confirmations": [],
+      "confirmationsCount": 11,
+      "duplicateCount": 0,
+      "timeline": [
+        {
+          "id": "t1",
+          "stage": "reported",
+          "title": "REPORTED",
+          "description": "Reported by Aarav Sharma",
+          "timestamp": "14 Aug · 09:30 AM",
+          "actorName": "Aarav Sharma",
+          "actorRole": "Citizen",
+          "isCompleted": true
+        },
+        {
+          "id": "t2",
+          "stage": "assigned",
+          "title": "ASSIGNED",
+          "description": "Assigned to Parks & Public Spaces",
+          "timestamp": "14 Aug · 10:00 AM",
+          "actorName": "Meera Deshmukh",
+          "actorRole": "Parks & Public Spaces",
+          "isCompleted": true
+        },
+        {
+          "id": "t3",
+          "stage": "resolved",
+          "title": "RESOLVED",
+          "description": "New precast bench installed and railing welded.",
+          "timestamp": "14 Aug · 04:30 PM",
+          "actorName": "Meera Deshmukh",
+          "actorRole": "Parks & Public Spaces",
+          "isCompleted": true
+        }
+      ],
+      "resolution": {
+        "resolvedAt": "14 Aug · 04:30 PM",
+        "resolvedBy": "Meera Deshmukh (Parks & Public Spaces)",
+        "notes": "Installed heavy-duty concrete bench and repainted perimeter steel railing.",
+        "beforeImageUrl": "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80",
+        "afterImageUrl": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80",
+        "verificationStatus": "verified_resolved",
+        "citizenFeedbackCount": {
+          "yes": 6,
+          "no": 0
+        },
+        "citizenVotes": [
+          {
+            "userId": "user_citizen_aarav",
+            "userName": "Aarav Sharma",
+            "vote": "yes",
+            "comment": "Bench looks brand new, verified.",
+            "timestamp": "14 Aug · 05:00 PM"
+          }
+        ]
+      },
+      "sla": {
+        "targetHours": 48,
+        "deadline": "16 Aug · 09:30 AM",
+        "hoursRemaining": 0,
+        "isBreached": false
+      },
+      "createdAt": "2026-08-16T18:05:12.541Z",
+      "updatedAt": "2026-08-17T06:05:12.541Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif_1",
+      "userId": "user_citizen_aarav",
+      "title": "Complaint Assigned",
+      "message": "Your complaint CIV-2842 has been assigned to Public Works.",
+      "type": "info",
+      "issueId": "CIV-2842",
+      "read": false,
+      "createdAt": "2026-08-18T16:05:12.541Z"
+    },
+    {
+      "id": "notif_2",
+      "userId": "user_citizen_aarav",
+      "title": "Status Update",
+      "message": "Your complaint CIV-2841 is now in progress.",
+      "type": "info",
+      "issueId": "CIV-2841",
+      "read": false,
+      "createdAt": "2026-08-18T14:05:12.541Z"
+    },
+    {
+      "id": "notif_3",
+      "userId": "user_citizen_aarav",
+      "title": "Resolution Complete",
+      "message": "Complaint CIV-2836 has been resolved by Sanitation.",
+      "type": "success",
+      "issueId": "CIV-2836",
+      "read": true,
+      "createdAt": "2026-08-18T10:05:12.541Z"
+    },
+    {
+      "id": "notif_4",
+      "userId": "user_officer_priya",
+      "title": "SLA Warning",
+      "message": "Complaint CIV-2842 has 2h remaining before SLA escalation.",
+      "type": "warning",
+      "issueId": "CIV-2842",
+      "read": false,
+      "createdAt": "2026-08-18T17:05:12.541Z"
+    }
+  ]
+}

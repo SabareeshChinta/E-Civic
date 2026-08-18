@@ -51,83 +51,83 @@ export const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* 1. OPERATIONS HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3 sm:pb-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <span>CITY OPERATIONS</span>
-            <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200 uppercase">
-              Operational Command
+            <span className="text-[10px] sm:text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200 uppercase">
+              Command
             </span>
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
             Live civic issue management and departmental dispatch
           </p>
         </div>
       </div>
 
-      {/* 2. TOP METRIC COUNTERS (Section 6 Specs) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+      {/* 2. TOP METRIC COUNTERS */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+          <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
             Open Issues
           </span>
-          <span className="text-2xl font-bold font-mono text-slate-900 mt-1 block">
+          <span className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1 block">
             {openCount}
           </span>
         </div>
 
-        <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block">
+        <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+          <span className="text-[10px] sm:text-[11px] font-bold text-amber-700 uppercase tracking-wider block">
             In Progress
           </span>
-          <span className="text-2xl font-bold font-mono text-amber-800 mt-1 block">
+          <span className="text-xl sm:text-2xl font-bold font-mono text-amber-800 mt-1 block">
             {inProgressCount}
           </span>
         </div>
 
-        <div className="bg-white p-4 rounded-lg border border-rose-300 shadow-xs">
-          <span className="text-[11px] font-bold text-rose-800 uppercase tracking-wider flex items-center gap-1">
+        <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-rose-300 shadow-xs">
+          <span className="text-[10px] sm:text-[11px] font-bold text-rose-800 uppercase tracking-wider flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5 text-rose-600" /> Over SLA
           </span>
-          <span className="text-2xl font-bold font-mono text-rose-700 mt-1 block">
+          <span className="text-xl sm:text-2xl font-bold font-mono text-rose-700 mt-1 block">
             {overSlaCount}
           </span>
         </div>
 
-        <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs">
-          <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">
+        <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+          <span className="text-[10px] sm:text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">
             Resolved Today
           </span>
-          <span className="text-2xl font-bold font-mono text-emerald-800 mt-1 block">
+          <span className="text-xl sm:text-2xl font-bold font-mono text-emerald-800 mt-1 block">
             {resolvedTodayCount}
           </span>
         </div>
       </div>
 
-      {/* 3. OPERATIONAL ISSUE QUEUE (Compact Table - Section 6 Specs) */}
+      {/* 3. OPERATIONAL ISSUE QUEUE */}
       <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs space-y-0">
         {/* Table Filter Controls */}
-        <div className="p-3.5 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center space-x-2 flex-1 min-w-[200px]">
-            <Search className="w-4 h-4 text-slate-400" />
+        <div className="p-3 sm:p-3.5 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs">
+          <div className="flex items-center space-x-2 flex-1 min-w-[180px]">
+            <Search className="w-4 h-4 text-slate-400 shrink-0" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search by ID, keyword, street..."
-              className="w-full bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-900 focus:outline-none focus:border-teal-700"
+              placeholder="Search ID, title, street..."
+              className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 sm:py-1 text-xs text-slate-900 focus:outline-none focus:border-teal-700"
             />
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto no-scrollbar pb-0.5">
             <select
               value={selectedDept}
               onChange={e => setSelectedDept(e.target.value)}
-              className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-800 font-medium"
+              className="bg-white border border-slate-300 rounded px-2 py-1.5 sm:py-1 text-[11px] sm:text-xs text-slate-800 font-medium shrink-0"
             >
-              <option value="all">All Departments</option>
+              <option value="all">All Depts</option>
               <option value="dept_public_works">Public Works</option>
               <option value="dept_sanitation">Sanitation</option>
               <option value="dept_water_drainage">Water & Drainage</option>
@@ -139,7 +139,7 @@ export const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({
             <select
               value={selectedWard}
               onChange={e => setSelectedWard(e.target.value)}
-              className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-800 font-medium"
+              className="bg-white border border-slate-300 rounded px-2 py-1.5 sm:py-1 text-[11px] sm:text-xs text-slate-800 font-medium shrink-0"
             >
               <option value="all">All Wards</option>
               <option value="Ward 14">Ward 14</option>
@@ -151,9 +151,9 @@ export const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({
             <select
               value={selectedStatus}
               onChange={e => setSelectedStatus(e.target.value)}
-              className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-800 font-medium"
+              className="bg-white border border-slate-300 rounded px-2 py-1.5 sm:py-1 text-[11px] sm:text-xs text-slate-800 font-medium shrink-0"
             >
-              <option value="all">All Statuses</option>
+              <option value="all">All Status</option>
               <option value="reported">Reported</option>
               <option value="assigned">Assigned</option>
               <option value="in_progress">In Progress</option>
@@ -162,8 +162,47 @@ export const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({
           </div>
         </div>
 
-        {/* Table Rows */}
-        <div className="overflow-x-auto">
+        {/* Mobile View: Card Stack */}
+        <div className="block lg:hidden divide-y divide-slate-100">
+          {filteredIssues.map((issue, idx) => {
+            const isOverSla = issue.sla?.isBreached || issue.sla?.hoursRemaining < 0;
+            const slaText = isOverSla
+              ? 'OVER SLA'
+              : issue.status === 'resolved'
+              ? 'Completed'
+              : `${issue.sla?.hoursRemaining || 4}h remaining`;
+
+            return (
+              <div
+                key={issue.id}
+                onClick={() => onSelectIssue(issue)}
+                className={`p-3.5 hover:bg-slate-50 transition cursor-pointer space-y-2 ${
+                  isOverSla ? 'bg-rose-50/20' : ''
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-mono font-bold text-xs text-teal-800">#{issue.id}</span>
+                    <PriorityBadge level={issue.priorityLevel} score={issue.priorityScore} size="sm" />
+                  </div>
+                  <StatusBadge status={issue.status} size="sm" />
+                </div>
+
+                <p className="font-semibold text-slate-900 text-xs line-clamp-1">{issue.title}</p>
+
+                <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+                  <span>{issue.location.ward} • {issue.departmentName}</span>
+                  <span className={isOverSla ? 'text-rose-700 font-bold font-mono' : 'font-mono text-slate-600'}>
+                    {slaText}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop View: Full Data Table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-800">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold text-[10px]">
               <tr>

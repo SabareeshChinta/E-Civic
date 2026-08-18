@@ -42,28 +42,28 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
   ];
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
       {/* 1. HERO SECTION */}
-      <div className="bg-white border border-slate-200 rounded-lg p-8 sm:p-10 shadow-xs space-y-5">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-teal-50 border border-teal-200 text-teal-800 text-xs font-semibold uppercase tracking-wider">
+      <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-10 shadow-xs space-y-4 sm:space-y-5">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-teal-50 border border-teal-200 text-teal-800 text-[11px] sm:text-xs font-semibold uppercase tracking-wider">
           <Shield className="w-3.5 h-3.5" />
           Municipal Civic Grievance System
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
           Report it. Track it. Get it resolved.
         </h1>
 
-        <p className="text-slate-600 text-base max-w-2xl leading-relaxed">
+        <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
           Report potholes, garbage accumulation, broken streetlights, water issues and other civic problems directly to the responsible department.
         </p>
 
         {/* Primary and Secondary CTAs */}
-        <div className="pt-2 flex flex-wrap items-center gap-3">
+        <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
           <button
             id="landing-report-cta"
             onClick={onOpenReport}
-            className="px-5 py-2.5 rounded bg-teal-800 hover:bg-teal-900 text-white text-sm font-semibold flex items-center gap-2 shadow-xs transition"
+            className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 rounded bg-teal-800 hover:bg-teal-900 text-white text-sm font-semibold flex items-center gap-2 shadow-xs transition"
           >
             <Plus className="w-4 h-4" />
             <span>Report an Issue</span>
@@ -72,7 +72,7 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
           <button
             id="landing-track-cta"
             onClick={() => onOpenTrack()}
-            className="px-5 py-2.5 rounded bg-white hover:bg-slate-50 text-slate-800 text-sm font-semibold border border-slate-300 flex items-center gap-2 shadow-xs transition"
+            className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 rounded bg-white hover:bg-slate-50 text-slate-800 text-sm font-semibold border border-slate-300 flex items-center gap-2 shadow-xs transition"
           >
             <Search className="w-4 h-4 text-slate-500" />
             <span>Track a Complaint</span>
@@ -83,63 +83,89 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
       {/* 2. COMPACT LIVE CIVIC OVERVIEW (DEMO DATA) */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs text-slate-500">
-          <span className="font-bold uppercase tracking-wider text-slate-700">
+          <span className="font-bold uppercase tracking-wider text-slate-700 text-[11px] sm:text-xs">
             Live Civic Overview
           </span>
-          <span className="font-mono text-[11px] bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+          <span className="font-mono text-[10px] sm:text-[11px] bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
             DEMO DATA
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="bg-white p-4 rounded-lg border border-slate-200">
-            <span className="text-[11px] uppercase font-bold text-slate-500 tracking-wider block">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+          <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] uppercase font-bold text-slate-500 tracking-wider block">
               Reports Today
             </span>
-            <span className="text-2xl font-bold font-mono text-slate-900 mt-1 block">
+            <span className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1 block">
               1,284
             </span>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border border-slate-200">
-            <span className="text-[11px] uppercase font-bold text-emerald-700 tracking-wider block">
+          <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] uppercase font-bold text-emerald-700 tracking-wider block">
               Resolved
             </span>
-            <span className="text-2xl font-bold font-mono text-emerald-800 mt-1 block">
+            <span className="text-xl sm:text-2xl font-bold font-mono text-emerald-800 mt-1 block">
               932
             </span>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border border-slate-200">
-            <span className="text-[11px] uppercase font-bold text-amber-700 tracking-wider block">
+          <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] uppercase font-bold text-amber-700 tracking-wider block">
               In Progress
             </span>
-            <span className="text-2xl font-bold font-mono text-amber-800 mt-1 block">
+            <span className="text-xl sm:text-2xl font-bold font-mono text-amber-800 mt-1 block">
               248
             </span>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border border-slate-200">
-            <span className="text-[11px] uppercase font-bold text-slate-500 tracking-wider block">
+          <div className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] uppercase font-bold text-slate-500 tracking-wider block">
               Avg. Response
             </span>
-            <span className="text-2xl font-bold font-mono text-slate-900 mt-1 block">
+            <span className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1 block">
               6h 42m
             </span>
           </div>
         </div>
       </div>
 
-      {/* 3. RECENT CIVIC ACTIVITY TABLE */}
-      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs space-y-0">
-        <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+      {/* 3. RECENT CIVIC ACTIVITY (Responsive Card Stack on mobile, Table on desktop) */}
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs">
+        <div className="p-3.5 sm:p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800">
             Recent Civic Activity
           </h2>
-          <span className="text-xs text-slate-500">Live operational feed</span>
+          <span className="text-[11px] sm:text-xs text-slate-500">Live operational feed</span>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile View: Clean Card List */}
+        <div className="block sm:hidden divide-y divide-slate-100">
+          {issues.slice(0, 5).map(issue => (
+            <div
+              key={issue.id}
+              onClick={() => onOpenTrack(issue.id)}
+              className="p-3.5 hover:bg-slate-50 transition cursor-pointer space-y-2"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono font-bold text-teal-800 text-xs">
+                  {issue.id}
+                </span>
+                <StatusBadge status={issue.status} size="sm" />
+              </div>
+              <p className="font-semibold text-slate-900 text-xs line-clamp-1">
+                {issue.title}
+              </p>
+              <div className="flex items-center justify-between text-[11px] text-slate-500">
+                <span>{issue.location.sector} • {issue.departmentName}</span>
+                <span className="font-semibold text-teal-800">Track →</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Full Table */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-800">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold text-[11px]">
               <tr>
@@ -190,12 +216,12 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
           Civic Categories Directory
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3">
           {categories.map((cat, idx) => (
             <div
               key={idx}
               onClick={onOpenReport}
-              className="bg-white p-4 rounded-lg border border-slate-200 hover:border-teal-700 cursor-pointer transition flex items-start space-x-3 shadow-xs"
+              className="bg-white p-3.5 sm:p-4 rounded-lg border border-slate-200 hover:border-teal-700 cursor-pointer transition flex items-start space-x-3 shadow-xs active:scale-[0.99]"
             >
               <div className="p-2 rounded bg-slate-50 border border-slate-200 shrink-0">
                 {cat.icon}
