@@ -113,11 +113,11 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateHome, onToggleNotifica
             </div>
           </div>
 
-          {/* Right Actions: Persona Selector & Notifications */}
+          {/* Right Actions: Profile Selector & Notifications */}
           <div className="flex items-center space-x-3">
-            {/* Persona Switcher Dropdown */}
+            {/* Profile Switcher Dropdown */}
             <div className="flex items-center space-x-1.5 text-xs text-slate-700">
-              <span className="text-slate-400 hidden md:inline text-[11px]">Persona:</span>
+              <span className="text-slate-400 hidden md:inline text-[11px]">Profile:</span>
               <select
                 value={currentUser?.id || 'user_citizen_aarav'}
                 onChange={e => switchUser(e.target.value)}

@@ -33,7 +33,7 @@ export const DemoGuideFloating: React.FC = () => {
 
     if (targetStep === 1) {
       switchRole('citizen');
-      showToast('Switched to Citizen Persona (Aarav Sharma)', 'info');
+      showToast('Switched to Citizen Profile (Aarav Sharma)', 'info');
     } else if (targetStep === 2) {
       switchRole('citizen');
       setIsReportingModalOpen(true);
@@ -44,7 +44,7 @@ export const DemoGuideFloating: React.FC = () => {
       showToast('Inspecting Case #CIV-48291 (Priority 92/100)', 'info');
     } else if (targetStep === 4) {
       switchRole('officer');
-      showToast('Switched to Authority Persona: Priya Mehta (Roads & Infra)', 'info');
+      showToast('Switched to Authority Profile: Priya Mehta (Public Works)', 'info');
     } else if (targetStep === 5) {
       switchRole('officer');
       const civ48 = issues.find(i => i.id === 'CIV-48291') || issues[0];

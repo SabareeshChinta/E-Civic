@@ -61,7 +61,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans">
-      {/* 1. TOP HEADER (Unified Navigation, Home Button & Persona Switcher) */}
+      {/* 1. TOP HEADER (Unified Navigation, Home Button & Profile Switcher) */}
       <Header onNavigateHome={handleNavigateHome} />
 
       {/* 2. CITIZEN SUB-NAVIGATION BAR (Citizen Experience Navigation Specs) */}
