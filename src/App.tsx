@@ -26,7 +26,7 @@ import { CivicIssue } from './types/index.js';
 type CitizenNavTab = 'home' | 'report' | 'my_reports' | 'nearby' | 'track';
 
 export const App: React.FC = () => {
-  const { currentRole, currentUser } = useAuth();
+  const { currentRole, currentUser, switchRole } = useAuth();
   const {
     issues,
     selectedIssue,
@@ -36,6 +36,12 @@ export const App: React.FC = () => {
 
   const [citizenTab, setCitizenTab] = useState<CitizenNavTab>('home');
   const [trackedIssueId, setTrackedIssueId] = useState<string>('CIV-2842');
+
+  const handleNavigateHome = () => {
+    switchRole('citizen');
+    setSelectedIssue(null);
+    setCitizenTab('home');
+  };
 
   const handleOpenReport = () => {
     setCitizenTab('report');
@@ -55,8 +61,8 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans">
-      {/* 1. TOP HEADER (Unified Navigation & Persona Switcher) */}
-      <Header />
+      {/* 1. TOP HEADER (Unified Navigation, Home Button & Persona Switcher) */}
+      <Header onNavigateHome={handleNavigateHome} />
 
       {/* 2. CITIZEN SUB-NAVIGATION BAR (Citizen Experience Navigation Specs) */}
       {currentRole === 'citizen' && (

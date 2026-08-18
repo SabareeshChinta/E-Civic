@@ -12,14 +12,16 @@ import {
   Clock,
   ArrowRight,
   Menu,
-  X
+  X,
+  Home
 } from 'lucide-react';
 
 interface HeaderProps {
+  onNavigateHome?: () => void;
   onToggleNotifications?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
+export const Header: React.FC<HeaderProps> = ({ onNavigateHome, onToggleNotifications }) => {
   const { currentRole, currentUser, switchUser, switchRole } = useAuth();
   const { notifications, markAllNotificationsAsRead, setSelectedIssue, issues } = useIssues();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -36,18 +38,33 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
     setIsNotifOpen(false);
   };
 
+  const handleLogoOrHomeClick = () => {
+    if (onNavigateHome) {
+      onNavigateHome();
+    } else {
+      switchRole('citizen');
+      setSelectedIssue(null);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
-          {/* Logo & Platform Title */}
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded bg-teal-800 text-white flex items-center justify-center font-bold text-sm tracking-wider">
+          {/* Logo & Platform Title (Clickable to Home / Intro page) */}
+          <div
+            onClick={handleLogoOrHomeClick}
+            className="flex items-center space-x-3 cursor-pointer group select-none"
+            title="Go to Home / Intro Page"
+          >
+            <div className="w-8 h-8 rounded bg-teal-800 text-white flex items-center justify-center font-bold text-sm tracking-wider group-hover:bg-teal-900 transition">
               EC
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-bold text-sm tracking-tight text-slate-900">E-CIVIC</span>
+                <span className="font-bold text-sm tracking-tight text-slate-900 group-hover:text-teal-800 transition">
+                  E-CIVIC
+                </span>
                 <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-300 font-semibold">
                   MUNICIPAL PORTAL
                 </span>
@@ -58,28 +75,42 @@ export const Header: React.FC<HeaderProps> = ({ onToggleNotifications }) => {
             </div>
           </div>
 
-          {/* Center: Quick Experience Switcher (Citizen vs Department Operations) */}
-          <div className="flex items-center bg-slate-100 p-0.5 rounded border border-slate-200 text-xs">
+          {/* Center: Home Button & Quick Experience Switcher */}
+          <div className="flex items-center space-x-2">
+            {/* Direct Home Button */}
             <button
-              onClick={() => switchRole('citizen')}
-              className={`px-3 py-1 rounded font-medium transition ${
-                currentRole === 'citizen'
-                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
+              id="header-home-btn"
+              onClick={handleLogoOrHomeClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold text-slate-700 hover:text-teal-800 hover:bg-slate-100 transition border border-transparent hover:border-slate-200"
+              title="Return to Citizen Homepage"
             >
-              Citizen Portal
+              <Home className="w-3.5 h-3.5 text-teal-700" />
+              <span>Home</span>
             </button>
-            <button
-              onClick={() => switchRole('officer')}
-              className={`px-3 py-1 rounded font-medium transition ${
-                currentRole === 'officer'
-                  ? 'bg-teal-800 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              City Operations
-            </button>
+
+            {/* Experience Switcher (Citizen vs Department Operations) */}
+            <div className="flex items-center bg-slate-100 p-0.5 rounded border border-slate-200 text-xs">
+              <button
+                onClick={() => switchRole('citizen')}
+                className={`px-3 py-1 rounded font-medium transition ${
+                  currentRole === 'citizen'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Citizen Portal
+              </button>
+              <button
+                onClick={() => switchRole('officer')}
+                className={`px-3 py-1 rounded font-medium transition ${
+                  currentRole === 'officer'
+                    ? 'bg-teal-800 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                City Operations
+              </button>
+            </div>
           </div>
 
           {/* Right Actions: Persona Selector & Notifications */}
