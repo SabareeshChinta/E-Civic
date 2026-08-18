@@ -57,7 +57,7 @@ const PRESETS = [
     ward: 'Ward 08',
     lat: 28.6189,
     lng: 77.2045,
-    img: 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&w=800&q=80'
+    img: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80'
   },
   {
     title: 'Drinking water pipeline burst on main road',

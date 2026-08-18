@@ -33,7 +33,7 @@ const PRESET_CIVIC_PHOTOS = [
   },
   {
     label: 'Garbage Dump (Sector 8)',
-    url: 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&w=800&q=80',
+    url: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80',
     desc: 'Overflowing commercial garbage heap outside Sector 8 market blocking pedestrian sidewalk. Foul stench and health hazard.',
     sector: 'Sector 8',
     address: 'Commercial Plaza Lane, Sector 8'
@@ -47,8 +47,8 @@ const PRESET_CIVIC_PHOTOS = [
   },
   {
     label: 'Drainage Blockage (Sector 21)',
-    url: 'https://images.unsplash.com/photo-1599818451877-e6f6ee9ff659?auto=format&fit=crop&w=800&q=80',
-    desc: 'Clogged sewage drain spilling foul black water on street. Mosquito breeding and pedestrian obstruction.',
+    url: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80',
+    desc: 'Clogged sewage drain spilling foul water on street. High risk of waterlogging and pedestrian obstruction.',
     sector: 'Sector 21',
     address: 'Street 4, Sector 21 Residential Block B'
   }

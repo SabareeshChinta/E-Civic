@@ -469,7 +469,7 @@ export const INITIAL_ISSUES: CivicIssue[] = [
       ward: 'Ward 08',
       landmark: 'Near Green Park'
     },
-    images: ['https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1507034589631-9433cc6bc453?auto=format&fit=crop&w=800&q=80'],
     aiAnalysis: {
       category: 'Streetlights',
       categoryId: 'cat_streetlights',
@@ -530,7 +530,7 @@ export const INITIAL_ISSUES: CivicIssue[] = [
       ward: 'Ward 21',
       landmark: 'Near Community Hall'
     },
-    images: ['https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80'],
     aiAnalysis: {
       category: 'Garbage & Waste',
       categoryId: 'cat_waste',
@@ -573,8 +573,8 @@ export const INITIAL_ISSUES: CivicIssue[] = [
       resolvedAt: '15 Aug · 05:00 PM',
       resolvedBy: 'Vikram Singh (Sanitation)',
       notes: 'Dumpster cleared, 1.5 tons of commercial waste removed, sidewalk disinfected.',
-      beforeImageUrl: 'https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&w=800&q=80',
-      afterImageUrl: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
+      beforeImageUrl: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=800&q=80',
+      afterImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80',
       verificationStatus: 'verified_resolved',
       citizenFeedbackCount: { yes: 8, no: 0 },
       citizenVotes: [{ userId: 'user_citizen_aarav', userName: 'Aarav Sharma', vote: 'yes', comment: 'Clean sidewalk, verified.', timestamp: '15 Aug · 05:30 PM' }]
@@ -677,7 +677,7 @@ export const INITIAL_ISSUES: CivicIssue[] = [
       ward: 'Ward 03',
       landmark: 'Near Sector 3 Park Gate'
     },
-    images: ['https://images.unsplash.com/photo-1584463699027-e4359d9c22e4?auto=format&fit=crop&w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80'],
     aiAnalysis: {
       category: 'Public Spaces',
       categoryId: 'cat_public_spaces',
@@ -719,7 +719,7 @@ export const INITIAL_ISSUES: CivicIssue[] = [
       resolvedAt: '14 Aug · 04:30 PM',
       resolvedBy: 'Meera Deshmukh (Parks & Public Spaces)',
       notes: 'Installed heavy-duty concrete bench and repainted perimeter steel railing.',
-      beforeImageUrl: 'https://images.unsplash.com/photo-1584463699027-e4359d9c22e4?auto=format&fit=crop&w=800&q=80',
+      beforeImageUrl: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80',
       afterImageUrl: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
       verificationStatus: 'verified_resolved',
       citizenFeedbackCount: { yes: 6, no: 0 },
