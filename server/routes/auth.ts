@@ -3,45 +3,76 @@ import { db } from '../db/database.js';
 
 const router = Router();
 
-// Standard Login for Citizen and Authority
+// Registered valid test credentials map
+const REGISTERED_CREDENTIALS: Record<string, { userId: string; allowedPasswords: string[] }> = {
+  'aarav.sharma@citizen.gov.in': {
+    userId: 'user_citizen_aarav',
+    allowedPasswords: ['citizen123', 'password123']
+  },
+  'aarav': {
+    userId: 'user_citizen_aarav',
+    allowedPasswords: ['citizen123', 'password123']
+  },
+  'citizen': {
+    userId: 'user_citizen_aarav',
+    allowedPasswords: ['citizen123', 'password123']
+  },
+  'priya.mehta@pwd.gov.in': {
+    userId: 'user_officer_priya',
+    allowedPasswords: ['officer123', 'password123']
+  },
+  'priya': {
+    userId: 'user_officer_priya',
+    allowedPasswords: ['officer123', 'password123']
+  },
+  'officer': {
+    userId: 'user_officer_priya',
+    allowedPasswords: ['officer123', 'password123']
+  },
+  'authority': {
+    userId: 'user_officer_priya',
+    allowedPasswords: ['officer123', 'password123']
+  },
+  'admin@municipality.gov.in': {
+    userId: 'user_admin_rajesh',
+    allowedPasswords: ['admin123', 'password123']
+  },
+  'admin': {
+    userId: 'user_admin_rajesh',
+    allowedPasswords: ['admin123', 'password123']
+  }
+};
+
+// Strict Login Endpoint
 router.post('/login', (req, res) => {
-  const { email, username, password, role } = req.body;
-  const users = db.getUsers();
-
+  const { email, username, password } = req.body;
   const query = (email || username || '').trim().toLowerCase();
+  const pwd = (password || '').trim();
 
-  // Find user by email, id, or role match
-  let user = users.find(
-    u =>
-      u.email.toLowerCase() === query ||
-      u.id.toLowerCase() === query ||
-      u.name.toLowerCase() === query
-  );
-
-  // If user entered short alias like 'citizen', 'officer', 'admin'
-  if (!user && (query === 'citizen' || query === 'aarav')) {
-    user = users.find(u => u.role === 'citizen');
-  } else if (!user && (query === 'officer' || query === 'authority' || query === 'priya')) {
-    user = users.find(u => u.role === 'officer');
-  } else if (!user && (query === 'admin' || query === 'rajesh')) {
-    user = users.find(u => u.role === 'admin');
-  } else if (!user && role) {
-    user = users.find(u => u.role === role);
+  if (!query) {
+    return res.status(400).json({ error: 'Email / Username is required.' });
+  }
+  if (!pwd) {
+    return res.status(400).json({ error: 'Password is required.' });
   }
 
-  if (!user) {
+  const credentialRecord = REGISTERED_CREDENTIALS[query];
+
+  if (!credentialRecord) {
     return res.status(401).json({
-      error: 'Invalid credentials. Please use one of the test accounts listed on the login page.'
+      error: 'Account not found. Please select or enter one of the registered test accounts.'
     });
   }
 
-  // Verify password (allows standard test passwords)
-  const validPasswords = ['password123', 'citizen123', 'officer123', 'admin123', 'ecivic2026', 'test'];
-  if (password && !validPasswords.includes(password.trim())) {
-    // If not in standard list, still accept any non-empty password for demo ease or reject with clear message
-    if (password.length < 3) {
-      return res.status(401).json({ error: 'Password must be at least 3 characters long.' });
-    }
+  if (!credentialRecord.allowedPasswords.includes(pwd)) {
+    return res.status(401).json({
+      error: `Incorrect password for ${query}. Please enter the correct test password (e.g. ${credentialRecord.allowedPasswords[0]}).`
+    });
+  }
+
+  const user = db.getUserById(credentialRecord.userId);
+  if (!user) {
+    return res.status(404).json({ error: 'User profile not found in database.' });
   }
 
   return res.json({

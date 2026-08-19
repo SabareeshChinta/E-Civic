@@ -29,7 +29,7 @@ import { CivicIssue } from './types/index.js';
 type CitizenNavTab = 'home' | 'report' | 'my_reports' | 'nearby' | 'track';
 
 export const App: React.FC = () => {
-  const { currentRole, currentUser, switchRole } = useAuth();
+  const { currentRole, currentUser, switchRole, isAuthenticated, logout } = useAuth();
   const {
     issues,
     selectedIssue,
@@ -94,6 +94,8 @@ export const App: React.FC = () => {
     navigateToTab('track');
   };
 
+  const showLoginPage = !isAuthenticated || isLoginOpen;
+
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans">
       {/* 1. TOP HEADER (Unified Navigation, Back Button, Home Button, Profile Switcher & Login) */}
@@ -104,8 +106,8 @@ export const App: React.FC = () => {
         canGoBack={isLoginOpen || citizenTab !== 'home' || selectedIssue !== null || tabHistory.length > 0}
       />
 
-      {/* 2. CITIZEN SUB-NAVIGATION BAR */}
-      {!isLoginOpen && currentRole === 'citizen' && (
+      {/* 2. CITIZEN SUB-NAVIGATION BAR (Only when logged in) */}
+      {!showLoginPage && currentRole === 'citizen' && (
         <div className="bg-white border-b border-slate-200">
           <div className="max-w-5xl mx-auto px-3 sm:px-6">
             <nav className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar text-xs">
@@ -180,11 +182,11 @@ export const App: React.FC = () => {
 
       {/* 3. MAIN CONTENT CONTAINER */}
       <main className="flex-1">
-        {/* LOGIN SCREEN */}
-        {isLoginOpen ? (
+        {/* LOGIN SCREEN (Shown on first landing or when opened) */}
+        {showLoginPage ? (
           <LoginPage
             onSuccess={() => setIsLoginOpen(false)}
-            onCancel={() => setIsLoginOpen(false)}
+            onCancel={isAuthenticated ? () => setIsLoginOpen(false) : undefined}
             initialRole={currentRole}
           />
         ) : (

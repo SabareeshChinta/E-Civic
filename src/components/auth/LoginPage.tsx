@@ -24,7 +24,7 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initialRole = 'citizen' }) => {
-  const { login } = useAuth();
+  const { login, switchUser } = useAuth();
   const [selectedRole, setSelectedRole] = useState<Role>(initialRole);
   const [email, setEmail] = useState<string>('aarav.sharma@citizen.gov.in');
   const [password, setPassword] = useState<string>('citizen123');
@@ -84,6 +84,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
     setErrorMessage(null);
   };
 
+  const handleGuestAccess = () => {
+    switchUser('user_citizen_aarav');
+    onSuccess();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -117,7 +122,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
               <div>
                 <span className="font-bold text-sm tracking-tight text-slate-900">E-CIVIC</span>
                 <span className="text-[10px] uppercase font-mono ml-1.5 px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 font-semibold">
-                  SECURE AUTH
+                  SECURE PORTAL
                 </span>
               </div>
             </div>
@@ -134,10 +139,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
           </div>
 
           <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">
-            Sign In to Portal
+            Sign In to E-Civic
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Log in as a citizen to track grievances or as an authority to manage city operations.
+            Authenticate to access your citizen complaints or municipal command center.
           </p>
 
           {/* Role Tabs */}
@@ -182,7 +187,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
           {/* Email / Username Input */}
           <div className="space-y-1">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-              {selectedRole === 'citizen' ? 'Citizen Email or ID' : 'Authority Work Email'}
+              {selectedRole === 'citizen' ? 'Citizen Email / Username' : 'Authority Work Email'}
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -190,7 +195,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
                 id="login-email"
                 type="text"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e => {
+                  setEmail(e.target.value);
+                  setErrorMessage(null);
+                }}
                 placeholder={selectedRole === 'citizen' ? 'e.g. aarav.sharma@citizen.gov.in' : 'e.g. priya.mehta@pwd.gov.in'}
                 className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-9 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-700 font-medium"
                 required
@@ -204,7 +212,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
                 Password
               </label>
-              <span className="text-[11px] text-slate-400 font-mono">Test Password: {password || 'citizen123'}</span>
+              <span className="text-[11px] text-slate-400 font-mono">Test Password: {selectedRole === 'citizen' ? 'citizen123' : 'officer123'}</span>
             </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -212,8 +220,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
                 id="login-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                onChange={e => {
+                  setPassword(e.target.value);
+                  setErrorMessage(null);
+                }}
+                placeholder="Enter password"
                 className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-9 pr-10 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-700 font-mono"
                 required
               />
@@ -278,6 +289,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
                 </span>
               </button>
             ))}
+          </div>
+
+          {/* Direct Guest Link */}
+          <div className="pt-2 text-center">
+            <button
+              type="button"
+              onClick={handleGuestAccess}
+              className="text-xs text-slate-500 hover:text-teal-800 hover:underline font-medium"
+            >
+              Or continue directly as guest citizen →
+            </button>
           </div>
         </form>
 

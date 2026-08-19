@@ -147,32 +147,44 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Right Actions: Profile Selector, Login/Sign In, & Notifications */}
+          {/* Right Actions: Profile Selector, Login/Sign In, Logout & Notifications */}
           <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
             {/* Profile Switcher Dropdown */}
-            <div className="flex items-center space-x-1 text-xs text-slate-700">
-              <span className="text-slate-400 hidden lg:inline text-[11px]">Profile:</span>
-              <select
-                value={currentUser?.id || 'user_citizen_aarav'}
-                onChange={e => switchUser(e.target.value)}
-                className="bg-slate-50 border border-slate-300 rounded px-1.5 sm:px-2 py-1 text-[11px] sm:text-xs font-medium text-slate-800 focus:outline-none focus:border-teal-700 max-w-[90px] xs:max-w-[120px] sm:max-w-none"
-              >
-                <option value="user_citizen_aarav">Aarav (Citizen)</option>
-                <option value="user_officer_priya">Priya (Public Works)</option>
-                <option value="user_admin_rajesh">Admin (HQ)</option>
-              </select>
-            </div>
+            {isAuthenticated && (
+              <div className="flex items-center space-x-1 text-xs text-slate-700">
+                <span className="text-slate-400 hidden lg:inline text-[11px]">Profile:</span>
+                <select
+                  value={currentUser?.id || 'user_citizen_aarav'}
+                  onChange={e => switchUser(e.target.value)}
+                  className="bg-slate-50 border border-slate-300 rounded px-1.5 sm:px-2 py-1 text-[11px] sm:text-xs font-medium text-slate-800 focus:outline-none focus:border-teal-700 max-w-[90px] xs:max-w-[120px] sm:max-w-none"
+                >
+                  <option value="user_citizen_aarav">Aarav (Citizen)</option>
+                  <option value="user_officer_priya">Priya (Public Works)</option>
+                  <option value="user_admin_rajesh">Admin (HQ)</option>
+                </select>
+              </div>
+            )}
 
             {/* Sign In / Sign Out Button */}
-            {onOpenLogin && (
+            {isAuthenticated ? (
+              <button
+                id="header-logout-btn"
+                onClick={logout}
+                className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded text-[11px] sm:text-xs font-semibold text-rose-700 hover:text-rose-800 hover:bg-rose-50 border border-rose-200 transition"
+                title="Sign Out of Session"
+              >
+                <LogOut className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-rose-600" />
+                <span className="hidden xs:inline">Sign Out</span>
+              </button>
+            ) : (
               <button
                 id="header-login-btn"
                 onClick={onOpenLogin}
-                className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded text-[11px] sm:text-xs font-semibold bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100 transition"
-                title="Login with Test Credentials"
+                className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded text-[11px] sm:text-xs font-semibold bg-teal-800 text-white hover:bg-teal-900 shadow-xs transition"
+                title="Sign In to Portal"
               >
-                <LogIn className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-800" />
-                <span className="hidden xs:inline">Login</span>
+                <LogIn className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <span>Sign In</span>
               </button>
             )}
 
