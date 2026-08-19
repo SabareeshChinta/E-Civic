@@ -8,6 +8,7 @@ import { TrackComplaintPage } from './components/citizen/TrackComplaintPage.js';
 import { CitizenDashboard } from './components/citizen/CitizenDashboard.js';
 import { CivicMap } from './components/common/CivicMap.js';
 import { DepartmentCommandCenter } from './components/department/DepartmentCommandCenter.js';
+import { LoginPage } from './components/auth/LoginPage.js';
 import {
   Home,
   PlusCircle,
@@ -20,7 +21,8 @@ import {
   AlertTriangle,
   Info,
   X,
-  ArrowLeft
+  ArrowLeft,
+  LogIn
 } from 'lucide-react';
 import { CivicIssue } from './types/index.js';
 
@@ -38,8 +40,10 @@ export const App: React.FC = () => {
   const [citizenTab, setCitizenTab] = useState<CitizenNavTab>('home');
   const [tabHistory, setTabHistory] = useState<CitizenNavTab[]>([]);
   const [trackedIssueId, setTrackedIssueId] = useState<string>('CIV-2842');
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
 
   const navigateToTab = (newTab: CitizenNavTab) => {
+    setIsLoginOpen(false);
     if (citizenTab !== newTab) {
       setTabHistory(prev => [...prev, citizenTab]);
       setCitizenTab(newTab);
@@ -47,6 +51,7 @@ export const App: React.FC = () => {
   };
 
   const handleNavigateHome = () => {
+    setIsLoginOpen(false);
     switchRole('citizen');
     setSelectedIssue(null);
     setTabHistory([]);
@@ -54,6 +59,11 @@ export const App: React.FC = () => {
   };
 
   const handleNavigateBack = () => {
+    if (isLoginOpen) {
+      setIsLoginOpen(false);
+      return;
+    }
+
     if (selectedIssue) {
       setSelectedIssue(null);
       return;
@@ -86,15 +96,16 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col font-sans">
-      {/* 1. TOP HEADER (Unified Navigation, Back Button, Home Button & Profile Switcher) */}
+      {/* 1. TOP HEADER (Unified Navigation, Back Button, Home Button, Profile Switcher & Login) */}
       <Header
         onNavigateHome={handleNavigateHome}
         onNavigateBack={handleNavigateBack}
-        canGoBack={citizenTab !== 'home' || selectedIssue !== null || tabHistory.length > 0}
+        onOpenLogin={() => setIsLoginOpen(true)}
+        canGoBack={isLoginOpen || citizenTab !== 'home' || selectedIssue !== null || tabHistory.length > 0}
       />
 
-      {/* 2. CITIZEN SUB-NAVIGATION BAR (Citizen Experience Navigation Specs) */}
-      {currentRole === 'citizen' && (
+      {/* 2. CITIZEN SUB-NAVIGATION BAR */}
+      {!isLoginOpen && currentRole === 'citizen' && (
         <div className="bg-white border-b border-slate-200">
           <div className="max-w-5xl mx-auto px-3 sm:px-6">
             <nav className="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar text-xs">
@@ -169,72 +180,83 @@ export const App: React.FC = () => {
 
       {/* 3. MAIN CONTENT CONTAINER */}
       <main className="flex-1">
-        {/* CITIZEN PORTAL */}
-        {currentRole === 'citizen' && (
+        {/* LOGIN SCREEN */}
+        {isLoginOpen ? (
+          <LoginPage
+            onSuccess={() => setIsLoginOpen(false)}
+            onCancel={() => setIsLoginOpen(false)}
+            initialRole={currentRole}
+          />
+        ) : (
           <>
-            {citizenTab === 'home' && (
-              <CitizenLanding
-                issues={issues}
-                onOpenReport={handleOpenReport}
-                onOpenTrack={handleOpenTrack}
-                onSelectIssue={issue => handleOpenTrack(issue.id)}
-              />
-            )}
+            {/* CITIZEN PORTAL */}
+            {currentRole === 'citizen' && (
+              <>
+                {citizenTab === 'home' && (
+                  <CitizenLanding
+                    issues={issues}
+                    onOpenReport={handleOpenReport}
+                    onOpenTrack={handleOpenTrack}
+                    onSelectIssue={issue => handleOpenTrack(issue.id)}
+                  />
+                )}
 
-            {citizenTab === 'report' && (
-              <ReportIssueFlow
-                onCancel={handleNavigateBack}
-                onSuccess={handleReportSubmitted}
-              />
-            )}
+                {citizenTab === 'report' && (
+                  <ReportIssueFlow
+                    onCancel={handleNavigateBack}
+                    onSuccess={handleReportSubmitted}
+                  />
+                )}
 
-            {citizenTab === 'my_reports' && (
-              <CitizenDashboard
-                onOpenReport={handleOpenReport}
-                onSelectIssue={issue => handleOpenTrack(issue.id)}
-                onOpenTrack={handleOpenTrack}
-              />
-            )}
+                {citizenTab === 'my_reports' && (
+                  <CitizenDashboard
+                    onOpenReport={handleOpenReport}
+                    onSelectIssue={issue => handleOpenTrack(issue.id)}
+                    onOpenTrack={handleOpenTrack}
+                  />
+                )}
 
-            {citizenTab === 'nearby' && (
-              <div className="max-w-5xl mx-auto px-4 py-8 space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                  <div>
-                    <h1 className="text-xl font-bold text-slate-900 tracking-tight">
-                      Nearby Civic Issues Map
-                    </h1>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Filter by status and category across your municipal ward
-                    </p>
+                {citizenTab === 'nearby' && (
+                  <div className="max-w-5xl mx-auto px-4 py-8 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                      <div>
+                        <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+                          Nearby Civic Issues Map
+                        </h1>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Filter by status and category across your municipal ward
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleNavigateBack}
+                        className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 px-2.5 py-1 rounded bg-white border border-slate-200 hover:bg-slate-50"
+                      >
+                        <ArrowLeft className="w-3.5 h-3.5" /> Back
+                      </button>
+                    </div>
+                    <CivicMap
+                      issues={issues}
+                      onSelectIssue={issue => handleOpenTrack(issue.id)}
+                      height="500px"
+                    />
                   </div>
-                  <button
-                    onClick={handleNavigateBack}
-                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 px-2.5 py-1 rounded bg-white border border-slate-200 hover:bg-slate-50"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" /> Back
-                  </button>
-                </div>
-                <CivicMap
-                  issues={issues}
-                  onSelectIssue={issue => handleOpenTrack(issue.id)}
-                  height="500px"
-                />
-              </div>
+                )}
+
+                {citizenTab === 'track' && (
+                  <TrackComplaintPage
+                    initialIssueId={trackedIssueId}
+                    onSelectIssue={issue => setTrackedIssueId(issue.id)}
+                    onBack={handleNavigateBack}
+                  />
+                )}
+              </>
             )}
 
-            {citizenTab === 'track' && (
-              <TrackComplaintPage
-                initialIssueId={trackedIssueId}
-                onSelectIssue={issue => setTrackedIssueId(issue.id)}
-                onBack={handleNavigateBack}
-              />
+            {/* CITY OPERATIONS / DEPARTMENT DASHBOARD */}
+            {(currentRole === 'officer' || currentRole === 'admin') && (
+              <DepartmentCommandCenter />
             )}
           </>
-        )}
-
-        {/* CITY OPERATIONS / DEPARTMENT DASHBOARD */}
-        {(currentRole === 'officer' || currentRole === 'admin') && (
-          <DepartmentCommandCenter />
         )}
       </main>
 

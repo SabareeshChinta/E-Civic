@@ -14,12 +14,16 @@ import {
   ArrowLeft,
   Menu,
   X,
-  Home
+  Home,
+  LogIn,
+  LogOut,
+  KeyRound
 } from 'lucide-react';
 
 interface HeaderProps {
   onNavigateHome?: () => void;
   onNavigateBack?: () => void;
+  onOpenLogin?: () => void;
   canGoBack?: boolean;
   onToggleNotifications?: () => void;
 }
@@ -27,10 +31,11 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   onNavigateHome,
   onNavigateBack,
+  onOpenLogin,
   canGoBack = false,
   onToggleNotifications
 }) => {
-  const { currentRole, currentUser, switchUser, switchRole } = useAuth();
+  const { currentRole, currentUser, switchUser, switchRole, isAuthenticated, logout } = useAuth();
   const { notifications, markAllNotificationsRead, setSelectedIssue, issues } = useIssues();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
@@ -142,21 +147,34 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Right Actions: Profile Selector & Notifications */}
-          <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+          {/* Right Actions: Profile Selector, Login/Sign In, & Notifications */}
+          <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
             {/* Profile Switcher Dropdown */}
             <div className="flex items-center space-x-1 text-xs text-slate-700">
               <span className="text-slate-400 hidden lg:inline text-[11px]">Profile:</span>
               <select
                 value={currentUser?.id || 'user_citizen_aarav'}
                 onChange={e => switchUser(e.target.value)}
-                className="bg-slate-50 border border-slate-300 rounded px-1.5 sm:px-2 py-1 text-[11px] sm:text-xs font-medium text-slate-800 focus:outline-none focus:border-teal-700 max-w-[100px] xs:max-w-[130px] sm:max-w-none"
+                className="bg-slate-50 border border-slate-300 rounded px-1.5 sm:px-2 py-1 text-[11px] sm:text-xs font-medium text-slate-800 focus:outline-none focus:border-teal-700 max-w-[90px] xs:max-w-[120px] sm:max-w-none"
               >
                 <option value="user_citizen_aarav">Aarav (Citizen)</option>
                 <option value="user_officer_priya">Priya (Public Works)</option>
                 <option value="user_admin_rajesh">Admin (HQ)</option>
               </select>
             </div>
+
+            {/* Sign In / Sign Out Button */}
+            {onOpenLogin && (
+              <button
+                id="header-login-btn"
+                onClick={onOpenLogin}
+                className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded text-[11px] sm:text-xs font-semibold bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100 transition"
+                title="Login with Test Credentials"
+              >
+                <LogIn className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-800" />
+                <span className="hidden xs:inline">Login</span>
+              </button>
+            )}
 
             {/* Notifications Bell */}
             <div className="relative">
