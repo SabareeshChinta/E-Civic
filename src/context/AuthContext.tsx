@@ -142,14 +142,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!credRecord) {
         return {
           success: false,
-          error: 'Account not found. Please use one of the registered test accounts (e.g. aarav.sharma@citizen.gov.in or priya.mehta@pwd.gov.in).'
+          error: 'Account not found. Please check your email or username.'
         };
       }
 
       if (!credRecord.allowedPasswords.includes(pwd)) {
         return {
           success: false,
-          error: `Incorrect password. Please enter the test password (e.g. '${credRecord.allowedPasswords[0]}').`
+          error: 'Invalid password. Please check your credentials and try again.'
         };
       }
 

@@ -208,12 +208,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onCancel, initi
 
           {/* Password Input */}
           <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                Password
-              </label>
-              <span className="text-[11px] text-slate-400 font-mono">Test Password: {selectedRole === 'citizen' ? 'citizen123' : 'officer123'}</span>
-            </div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              Password
+            </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input

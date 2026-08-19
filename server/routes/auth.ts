@@ -66,7 +66,7 @@ router.post('/login', (req, res) => {
 
   if (!credentialRecord.allowedPasswords.includes(pwd)) {
     return res.status(401).json({
-      error: `Incorrect password for ${query}. Please enter the correct test password (e.g. ${credentialRecord.allowedPasswords[0]}).`
+      error: 'Invalid password. Please check your credentials and try again.'
     });
   }
 
