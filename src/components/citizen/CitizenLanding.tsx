@@ -1,5 +1,7 @@
 import React from 'react';
 import { CivicIssue } from '../../types/index.js';
+import { useIssues } from '../../context/IssueContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import { StatusBadge } from '../common/StatusBadge.js';
 import { PriorityBadge } from '../common/PriorityBadge.js';
 import {
@@ -16,7 +18,9 @@ import {
   Lightbulb,
   Droplets,
   Building2,
-  Signpost
+  Signpost,
+  ThumbsUp,
+  Users
 } from 'lucide-react';
 
 interface CitizenLandingProps {
@@ -32,6 +36,10 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
   onOpenTrack,
   onSelectIssue
 }) => {
+  const { upvoteIssue } = useIssues();
+  const { currentUser } = useAuth();
+  const currentUserId = currentUser?.id || 'user_citizen_aarav';
+
   const categories = [
     { name: 'Road & Potholes', icon: <Hammer className="w-5 h-5 text-teal-700" />, desc: 'Potholes, broken roads, damaged pavements' },
     { name: 'Garbage & Waste', icon: <Trash2 className="w-5 h-5 text-emerald-700" />, desc: 'Uncollected trash, overflowing bins, street litter' },
@@ -55,7 +63,7 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
         </h1>
 
         <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
-          Report potholes, garbage accumulation, broken streetlights, water issues and other civic problems directly to the responsible department.
+          Report potholes, garbage accumulation, broken streetlights, water issues and other civic problems directly to the responsible department, or upvote existing community issues to escalate their priority.
         </p>
 
         {/* Primary and Secondary CTAs */}
@@ -130,41 +138,78 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
         </div>
       </div>
 
-      {/* 3. RECENT CIVIC ACTIVITY (Responsive Card Stack on mobile, Table on desktop) */}
+      {/* 3. RECENT CIVIC ACTIVITY (With Direct Upvote Buttons) */}
       <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs">
         <div className="p-3.5 sm:p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800">
-            Recent Civic Activity
-          </h2>
-          <span className="text-[11px] sm:text-xs text-slate-500">Live operational feed</span>
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+              Recent Civic Activity & Community Upvotes
+            </h2>
+            <span className="text-[11px] text-slate-500">Upvote active issues to boost their operational priority</span>
+          </div>
+          <span className="text-[11px] sm:text-xs text-slate-500 hidden sm:inline">Live operational feed</span>
         </div>
 
         {/* Mobile View: Clean Card List */}
         <div className="block sm:hidden divide-y divide-slate-100">
-          {issues.slice(0, 5).map(issue => (
-            <div
-              key={issue.id}
-              onClick={() => onOpenTrack(issue.id)}
-              className="p-3.5 hover:bg-slate-50 transition cursor-pointer space-y-2"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono font-bold text-teal-800 text-xs">
-                  {issue.id}
-                </span>
-                <StatusBadge status={issue.status} size="sm" />
+          {issues.slice(0, 5).map(issue => {
+            const hasUpvoted = issue.confirmations?.some(c => c.userId === currentUserId) || false;
+            return (
+              <div
+                key={issue.id}
+                className="p-3.5 hover:bg-slate-50 transition space-y-2"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-mono font-bold text-teal-800 text-xs">
+                      #{issue.id}
+                    </span>
+                    <PriorityBadge level={issue.priorityLevel} score={issue.priorityScore} size="sm" />
+                  </div>
+                  <StatusBadge status={issue.status} size="sm" />
+                </div>
+
+                <p
+                  onClick={() => onOpenTrack(issue.id)}
+                  className="font-semibold text-slate-900 text-xs line-clamp-1 cursor-pointer hover:text-teal-800"
+                >
+                  {issue.title}
+                </p>
+
+                <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+                  <span>{issue.location.sector} • {issue.departmentName}</span>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        upvoteIssue(issue.id);
+                      }}
+                      className={`px-2 py-1 rounded text-[11px] font-semibold flex items-center gap-1 transition ${
+                        hasUpvoted
+                          ? 'bg-teal-800 text-white'
+                          : 'bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-300'
+                      }`}
+                      title={hasUpvoted ? 'Upvoted (+1)' : 'Upvote this issue'}
+                    >
+                      <ThumbsUp className={`w-3 h-3 ${hasUpvoted ? 'fill-current' : ''}`} />
+                      <span>{issue.confirmationsCount}</span>
+                    </button>
+
+                    <button
+                      onClick={() => onOpenTrack(issue.id)}
+                      className="font-semibold text-teal-800 hover:underline"
+                    >
+                      Track →
+                    </button>
+                  </div>
+                </div>
               </div>
-              <p className="font-semibold text-slate-900 text-xs line-clamp-1">
-                {issue.title}
-              </p>
-              <div className="flex items-center justify-between text-[11px] text-slate-500">
-                <span>{issue.location.sector} • {issue.departmentName}</span>
-                <span className="font-semibold text-teal-800">Track →</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Desktop View: Full Table */}
+        {/* Desktop View: Full Table with Upvote Action */}
         <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left text-xs text-slate-800">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold text-[11px]">
@@ -174,37 +219,55 @@ export const CitizenLanding: React.FC<CitizenLandingProps> = ({
                 <th className="py-2.5 px-4">Location</th>
                 <th className="py-2.5 px-4">Department</th>
                 <th className="py-2.5 px-4">Status</th>
+                <th className="py-2.5 px-4 text-center">Community Upvotes</th>
                 <th className="py-2.5 px-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {issues.slice(0, 5).map(issue => (
-                <tr key={issue.id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-3 px-4 font-mono font-bold text-teal-800">
-                    {issue.id}
-                  </td>
-                  <td className="py-3 px-4 font-medium text-slate-900 max-w-xs truncate">
-                    {issue.title}
-                  </td>
-                  <td className="py-3 px-4 text-slate-600">
-                    {issue.location.sector}
-                  </td>
-                  <td className="py-3 px-4 text-slate-600 font-medium">
-                    {issue.departmentName}
-                  </td>
-                  <td className="py-3 px-4">
-                    <StatusBadge status={issue.status} size="sm" />
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <button
-                      onClick={() => onOpenTrack(issue.id)}
-                      className="text-xs font-semibold text-teal-800 hover:text-teal-900 hover:underline"
-                    >
-                      Track Timeline →
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {issues.slice(0, 5).map(issue => {
+                const hasUpvoted = issue.confirmations?.some(c => c.userId === currentUserId) || false;
+                return (
+                  <tr key={issue.id} className="hover:bg-slate-50/80 transition">
+                    <td className="py-3 px-4 font-mono font-bold text-teal-800">
+                      {issue.id}
+                    </td>
+                    <td className="py-3 px-4 font-medium text-slate-900 max-w-xs truncate">
+                      {issue.title}
+                    </td>
+                    <td className="py-3 px-4 text-slate-600">
+                      {issue.location.sector}
+                    </td>
+                    <td className="py-3 px-4 text-slate-600 font-medium">
+                      {issue.departmentName}
+                    </td>
+                    <td className="py-3 px-4">
+                      <StatusBadge status={issue.status} size="sm" />
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <button
+                        onClick={() => upvoteIssue(issue.id)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-semibold transition ${
+                          hasUpvoted
+                            ? 'bg-teal-800 text-white ring-1 ring-teal-700'
+                            : 'bg-slate-100 hover:bg-teal-50 text-slate-800 hover:text-teal-900 border border-slate-300'
+                        }`}
+                        title={hasUpvoted ? 'You upvoted this (click to remove)' : 'Upvote to escalate urgency'}
+                      >
+                        <ThumbsUp className={`w-3 h-3 ${hasUpvoted ? 'fill-current' : ''}`} />
+                        <span>{issue.confirmationsCount} {issue.confirmationsCount === 1 ? 'vote' : 'votes'}</span>
+                      </button>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <button
+                        onClick={() => onOpenTrack(issue.id)}
+                        className="text-xs font-semibold text-teal-800 hover:text-teal-900 hover:underline"
+                      >
+                        Track Timeline →
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

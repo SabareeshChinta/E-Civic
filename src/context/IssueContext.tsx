@@ -44,6 +44,7 @@ interface IssueContextType {
   fetchNotifications: () => Promise<void>;
   createIssue: (issueData: any) => Promise<CivicIssue | null>;
   confirmIssue: (issueId: string, comment?: string, photoUrl?: string) => Promise<boolean>;
+  upvoteIssue: (issueId: string) => Promise<boolean>;
   assignOfficer: (issueId: string, officerId: string, officerName: string, department: string) => Promise<boolean>;
   updateStatus: (issueId: string, status: IssueStatus, notes?: string) => Promise<boolean>;
   resolveIssue: (issueId: string, resolvedBy: string, notes: string, afterImageUrl?: string) => Promise<boolean>;
@@ -244,6 +245,91 @@ export const IssueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return false;
   };
 
+  const upvoteIssue = async (issueId: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`/api/issues/${issueId}/upvote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: currentUser?.id || 'user_citizen_aarav',
+          userName: currentUser?.name || 'Aarav Sharma',
+          userAvatar: currentUser?.avatar
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const updated = data.issue;
+        setIssues(prev => prev.map(i => i.id === issueId ? updated : i));
+        if (selectedIssue?.id === issueId) {
+          setSelectedIssue(updated);
+        }
+        if (data.isUpvoted) {
+          showToast(`▲ Upvoted #${issueId}! Confirmations: ${data.confirmationsCount} (Priority: ${data.priorityScore}/100)`, 'success');
+        } else {
+          showToast(`Upvote removed for #${issueId}.`, 'info');
+        }
+        return true;
+      } else {
+        // Fallback local update
+        setIssues(prev => prev.map(i => {
+          if (i.id === issueId) {
+            const currentUserId = currentUser?.id || 'user_citizen_aarav';
+            const exists = i.confirmations.some(c => c.userId === currentUserId);
+            const newConfirmations = exists
+              ? i.confirmations.filter(c => c.userId !== currentUserId)
+              : [...i.confirmations, {
+                  id: `conf_upvote_${Date.now()}`,
+                  userId: currentUserId,
+                  userName: currentUser?.name || 'Aarav Sharma',
+                  createdAt: new Date().toISOString()
+                }];
+            const newScore = Math.min(100, Math.max(10, i.priorityScore + (exists ? -2 : 3)));
+            const updatedIssue = {
+              ...i,
+              confirmations: newConfirmations,
+              confirmationsCount: newConfirmations.length,
+              priorityScore: newScore
+            };
+            if (selectedIssue?.id === issueId) setSelectedIssue(updatedIssue);
+            return updatedIssue;
+          }
+          return i;
+        }));
+        showToast(`▲ Community upvote recorded for #${issueId}!`, 'success');
+        return true;
+      }
+    } catch {
+      // Offline fallback
+      setIssues(prev => prev.map(i => {
+        if (i.id === issueId) {
+          const currentUserId = currentUser?.id || 'user_citizen_aarav';
+          const exists = i.confirmations.some(c => c.userId === currentUserId);
+          const newConfirmations = exists
+            ? i.confirmations.filter(c => c.userId !== currentUserId)
+            : [...i.confirmations, {
+                id: `conf_upvote_${Date.now()}`,
+                userId: currentUserId,
+                userName: currentUser?.name || 'Aarav Sharma',
+                createdAt: new Date().toISOString()
+              }];
+          const newScore = Math.min(100, Math.max(10, i.priorityScore + (exists ? -2 : 3)));
+          const updatedIssue = {
+            ...i,
+            confirmations: newConfirmations,
+            confirmationsCount: newConfirmations.length,
+            priorityScore: newScore
+          };
+          if (selectedIssue?.id === issueId) setSelectedIssue(updatedIssue);
+          return updatedIssue;
+        }
+        return i;
+      }));
+      showToast(`▲ Community upvote recorded for #${issueId}!`, 'success');
+      return true;
+    }
+  };
+
   const assignOfficer = async (issueId: string, officerId: string, officerName: string, department: string): Promise<boolean> => {
     try {
       const res = await fetch(`/api/issues/${issueId}/assign`, {
@@ -405,6 +491,7 @@ export const IssueProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         fetchNotifications,
         createIssue,
         confirmIssue,
+        upvoteIssue,
         assignOfficer,
         updateStatus,
         resolveIssue,

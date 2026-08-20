@@ -287,6 +287,72 @@ router.post('/', (req, res) => {
   return res.status(201).json(created);
 });
 
+// POST Upvote / Toggle Upvote on an Issue
+router.post('/:id/upvote', (req, res) => {
+  const issue = db.getIssueById(req.params.id);
+  if (!issue) {
+    return res.status(404).json({ error: 'Issue not found' });
+  }
+
+  const { userId, userName, userAvatar } = req.body;
+  const currentUserId = userId || 'user_citizen_aarav';
+  const currentUserName = userName || 'Aarav Sharma';
+
+  const existingIndex = issue.confirmations.findIndex(c => c.userId === currentUserId);
+  let updatedConfirmations = [...issue.confirmations];
+  let isUpvoted = false;
+
+  if (existingIndex >= 0) {
+    // If already upvoted, remove the upvote (toggle off)
+    updatedConfirmations.splice(existingIndex, 1);
+    isUpvoted = false;
+  } else {
+    // Add new upvote
+    const newConfirmation = {
+      id: `conf_upvote_${Date.now()}`,
+      userId: currentUserId,
+      userName: currentUserName,
+      userAvatar,
+      userReliability: 98,
+      comment: 'Upvoted by community member.',
+      createdAt: new Date().toISOString()
+    };
+    updatedConfirmations.push(newConfirmation);
+    isUpvoted = true;
+  }
+
+  const newCount = updatedConfirmations.length;
+
+  // Re-calculate AI Priority with new upvote evidence!
+  const priorityBreakdown = AIService.calculatePriority({
+    categorySeverity: issue.severity,
+    confirmationsCount: newCount,
+    duplicateCount: issue.duplicateCount,
+    locationAddress: issue.location.address,
+    locationSector: issue.location.sector,
+    isSafetyHazard: issue.aiAnalysis?.safetyHazard || false,
+    unresolvedHours: (Date.now() - new Date(issue.createdAt).getTime()) / (3600 * 1000),
+    isRecurring: issue.recurrenceInfo?.isRecurring
+  });
+
+  const updated = db.updateIssue(issue.id, {
+    confirmations: updatedConfirmations,
+    confirmationsCount: newCount,
+    priorityScore: priorityBreakdown.score,
+    priorityLevel: priorityBreakdown.level,
+    priorityBreakdown,
+    status: issue.status === 'reported' && newCount > 1 ? 'community_verified' : issue.status,
+    updatedAt: new Date().toISOString()
+  });
+
+  return res.json({
+    issue: updated,
+    isUpvoted,
+    confirmationsCount: newCount,
+    priorityScore: updated?.priorityScore
+  });
+});
+
 // POST Community Confirmation ("I confirm this issue")
 router.post('/:id/confirm', (req, res) => {
   const issue = db.getIssueById(req.params.id);
@@ -314,7 +380,7 @@ router.post('/:id/confirm', (req, res) => {
   };
 
   const updatedConfirmations = [...issue.confirmations, newConfirmation];
-  const newCount = issue.confirmationsCount + 1;
+  const newCount = updatedConfirmations.length;
 
   // Re-calculate AI Priority with new confirmation evidence!
   const priorityBreakdown = AIService.calculatePriority({
@@ -323,7 +389,7 @@ router.post('/:id/confirm', (req, res) => {
     duplicateCount: issue.duplicateCount,
     locationAddress: issue.location.address,
     locationSector: issue.location.sector,
-    isSafetyHazard: issue.aiAnalysis.safetyHazard,
+    isSafetyHazard: issue.aiAnalysis?.safetyHazard || false,
     unresolvedHours: (Date.now() - new Date(issue.createdAt).getTime()) / (3600 * 1000),
     isRecurring: issue.recurrenceInfo?.isRecurring
   });

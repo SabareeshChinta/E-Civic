@@ -239,7 +239,12 @@ export const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({
                     </td>
 
                     <td className="py-2.5 px-3">
-                      <div className="font-mono font-bold text-[11px] text-teal-800">#{issue.id}</div>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-mono font-bold text-[11px] text-teal-800">#{issue.id}</span>
+                        <span className="text-[10px] font-mono font-semibold px-1 rounded bg-teal-50 text-teal-800 border border-teal-200">
+                          ▲ {issue.confirmationsCount}
+                        </span>
+                      </div>
                       <div className="font-semibold text-slate-900 line-clamp-1 max-w-xs">{issue.title}</div>
                     </td>
 

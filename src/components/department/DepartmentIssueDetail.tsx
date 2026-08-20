@@ -123,7 +123,7 @@ export const DepartmentIssueDetail: React.FC<DepartmentIssueDetailProps> = ({ is
 
         <h1 className="text-xl font-bold text-slate-900">{issue.title}</h1>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-100 text-xs text-slate-700">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-3 border-t border-slate-100 text-xs text-slate-700">
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-500 block">Location</span>
             <span className="font-semibold text-slate-900">{issue.location.address}</span>
@@ -141,8 +141,15 @@ export const DepartmentIssueDetail: React.FC<DepartmentIssueDetailProps> = ({ is
           </div>
 
           <div>
+            <span className="text-[10px] uppercase font-bold text-slate-500 block">Community Upvotes</span>
+            <span className="font-bold text-teal-900 font-mono flex items-center gap-1">
+              ▲ {issue.confirmationsCount} residents
+            </span>
+          </div>
+
+          <div>
             <span className="text-[10px] uppercase font-bold text-slate-500 block">Reported Time</span>
-            <span className="font-medium text-slate-900">{new Date(issue.createdAt).toLocaleString()}</span>
+            <span className="font-medium text-slate-900">{new Date(issue.createdAt).toLocaleDateString()}</span>
           </div>
         </div>
       </div>

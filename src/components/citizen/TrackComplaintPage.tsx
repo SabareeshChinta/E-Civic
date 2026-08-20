@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useIssues } from '../../context/IssueContext.js';
+import { useAuth } from '../../context/AuthContext.js';
 import { CivicIssue } from '../../types/index.js';
 import { StatusBadge } from '../common/StatusBadge.js';
 import { PriorityBadge } from '../common/PriorityBadge.js';
@@ -16,7 +17,11 @@ import {
   UserCheck,
   FileText,
   Camera,
-  ArrowLeft
+  ArrowLeft,
+  ThumbsUp,
+  TrendingUp,
+  Users,
+  Flame
 } from 'lucide-react';
 
 interface TrackComplaintPageProps {
@@ -26,9 +31,11 @@ interface TrackComplaintPageProps {
 }
 
 export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialIssueId, onBack }) => {
-  const { issues, verifyResolution } = useIssues();
+  const { issues, verifyResolution, upvoteIssue } = useIssues();
+  const { currentUser } = useAuth();
   const [searchId, setSearchId] = useState<string>(initialIssueId || 'CIV-2842');
   const [selectedIssue, setSelectedIssue] = useState<CivicIssue | null>(null);
+  const [isUpvoting, setIsUpvoting] = useState<boolean>(false);
 
   useEffect(() => {
     if (initialIssueId) {
@@ -52,7 +59,15 @@ export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialI
     }
   };
 
-  const isResolved = selectedIssue?.status === 'resolved' || selectedIssue?.status === 'citizen_verified' || selectedIssue?.status === 'closed';
+  const handleUpvoteClick = async () => {
+    if (!selectedIssue) return;
+    setIsUpvoting(true);
+    await upvoteIssue(selectedIssue.id);
+    setIsUpvoting(false);
+  };
+
+  const currentUserId = currentUser?.id || 'user_citizen_aarav';
+  const hasUpvoted = selectedIssue?.confirmations?.some(c => c.userId === currentUserId) || false;
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-4 py-5 sm:py-8 space-y-5 sm:space-y-6">
@@ -140,6 +155,39 @@ export const TrackComplaintPage: React.FC<TrackComplaintPageProps> = ({ initialI
             <div>
               <h2 className="text-sm sm:text-base font-bold text-slate-900">{selectedIssue.title}</h2>
               <p className="text-xs text-slate-600 mt-1 leading-relaxed">{selectedIssue.description}</p>
+            </div>
+
+            {/* UPVOTE & COMMUNITY VERIFICATION BANNER */}
+            <div className="bg-teal-50/70 border border-teal-200 rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-xs text-teal-950 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-teal-700" />
+                    Community Upvotes & Confirmations:
+                  </span>
+                  <span className="font-mono font-extrabold text-teal-800 bg-white px-2 py-0.5 rounded border border-teal-300 text-xs">
+                    {selectedIssue.confirmationsCount} {selectedIssue.confirmationsCount === 1 ? 'Resident' : 'Residents'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-teal-800 leading-relaxed">
+                  Upvoting signals that multiple citizens are affected. Each community upvote boosts the <strong>Priority Score</strong> and accelerates departmental dispatch.
+                </p>
+              </div>
+
+              <button
+                id="upvote-issue-btn"
+                onClick={handleUpvoteClick}
+                disabled={isUpvoting || selectedIssue.status === 'resolved' || selectedIssue.status === 'closed'}
+                className={`px-4 py-2 rounded text-xs font-semibold flex items-center justify-center gap-1.5 shrink-0 shadow-xs transition disabled:opacity-50 ${
+                  hasUpvoted
+                    ? 'bg-teal-800 text-white hover:bg-teal-900 ring-2 ring-teal-600/30'
+                    : 'bg-white text-teal-900 border border-teal-300 hover:bg-teal-100/60'
+                }`}
+                title={hasUpvoted ? 'You have upvoted this issue (click to remove)' : 'Upvote to escalate priority'}
+              >
+                <ThumbsUp className={`w-3.5 h-3.5 ${hasUpvoted ? 'fill-current' : ''}`} />
+                <span>{hasUpvoted ? '✓ Upvoted (+1)' : '▲ Upvote Issue (+1)'}</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs text-slate-700">

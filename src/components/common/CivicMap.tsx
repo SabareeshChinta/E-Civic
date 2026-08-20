@@ -124,7 +124,7 @@ export const CivicMap: React.FC<CivicMapProps> = ({
           <p style="font-size: 11px; color: #64748b; margin: 0 0 6px 0;">📍 ${issue.location.address} (${issue.location.ward})</p>
           <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 6px; font-size: 11px;">
             <span style="color: #475569;">Dept: <strong>${issue.departmentName}</strong></span>
-            <span style="font-weight: 700; color: #0f766e;">${issue.confirmationsCount} verified</span>
+            <span style="font-weight: 700; color: #0f766e; background: #f0fdfa; padding: 1px 5px; border-radius: 4px; border: 1px solid #ccfbf1;">▲ ${issue.confirmationsCount} Upvotes</span>
           </div>
         </div>
       `;
